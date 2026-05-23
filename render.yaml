@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: vody-rev32-ai-bullets
+    name: vody-rev33-ui-cleanup
     env: node
     buildCommand: npm install
     startCommand: npm start

@@ -1,6 +1,6 @@
 {
-  "name": "vody-rev32-ai-bullets",
-  "version": "32.0.0",
+  "name": "vody-rev33-ui-cleanup",
+  "version": "33.0.0",
   "type": "module",
   "private": true,
   "scripts": {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VODY correct layout rev32</title>
+<title>VODY correct layout rev33</title>
 <style>
 :root{
   --blue:#2f5bff;
@@ -721,11 +721,222 @@ button{
   .input-row{grid-template-columns:1fr 108px}
   #newTopicBtn{font-size:15px}
 }
+
+/* Rev33: iPhone-style clean UI, collapsible blocks, readable hierarchy map */
+:root{
+  --blue:#4b2be8;
+  --bg:#f7f8fc;
+  --card:#ffffff;
+  --line:#e2e5ec;
+  --text:#131a29;
+  --muted:#727b8c;
+}
+body{
+  background:var(--bg) !important;
+  color:var(--text) !important;
+  font-family:-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif !important;
+}
+.logo{
+  color:var(--blue) !important;
+  font-size:33px !important;
+  font-weight:850 !important;
+  letter-spacing:-1.4px !important;
+}
+.slogan{font-size:14px !important; margin-bottom:14px !important;}
+input{
+  min-height:58px !important;
+  border-radius:15px !important;
+  font-size:22px !important;
+  font-weight:500 !important;
+  padding:11px 14px !important;
+}
+.input-row{grid-template-columns:1fr 108px !important; gap:10px !important;}
+#newTopicBtn{font-size:18px !important; color:var(--blue) !important;}
+.controls{gap:10px !important; margin:12px 0 14px !important;}
+.controls button{
+  min-height:54px !important;
+  border-radius:14px !important;
+  font-size:21px !important;
+  font-weight:650 !important;
+}
+button.active, button.primary{
+  background:var(--blue) !important;
+  border-color:var(--blue) !important;
+  color:#fff !important;
+}
+.answer-card, .section-panel, .preset-panel, .more.show{
+  background:var(--card) !important;
+  border:1px solid var(--line) !important;
+  border-radius:17px !important;
+  box-shadow:0 2px 10px rgba(15,23,42,0.045) !important;
+}
+.answer-card{padding:18px 18px 16px !important; margin-bottom:14px !important;}
+.answer-card.loading{min-height:92px; display:flex; align-items:center;}
+.answer-card.loading .text{margin:0 !important; color:var(--blue); font-weight:700;}
+.title{
+  font-size:28px !important;
+  font-weight:850 !important;
+  letter-spacing:-0.5px !important;
+  margin-bottom:16px !important;
+}
+.text{
+  font-size:22px !important;
+  line-height:1.38 !important;
+  white-space:pre-line !important;
+  margin-bottom:18px !important;
+}
+.reading{
+  border:0 !important;
+  border-top:0 !important;
+  padding:4px 0 0 !important;
+  margin:0 !important;
+  display:flex;
+  gap:18px;
+  align-items:center;
+  font-size:20px !important;
+  font-weight:650;
+}
+.reading a{color:var(--blue) !important;}
+.reading-sep{color:#b8becb; font-weight:400;}
+.label,.ai-status{display:none !important;}
+.section-toggle{
+  width:100%;
+  min-height:64px;
+  margin:10px 0 0;
+  padding:0 18px;
+  border-radius:17px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  color:var(--text);
+  font-size:22px;
+  font-weight:750;
+  background:#fff;
+  box-shadow:0 2px 10px rgba(15,23,42,0.035);
+}
+.section-toggle::before{
+  content:"";
+  width:24px;
+  height:24px;
+  margin-right:12px;
+  border-radius:50%;
+  border:2px solid var(--blue);
+  display:inline-block;
+}
+.section-toggle{justify-content:flex-start;}
+.section-toggle .chev{margin-left:auto; color:var(--text); font-size:22px;}
+.section-panel{
+  display:none;
+  padding:14px 16px 16px;
+  margin:8px 0 14px;
+}
+.section-panel.show{display:block;}
+.map{
+  border:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+.map-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:10px;
+  min-height:42px;
+  border-bottom:1px solid #eef0f5;
+}
+.map-row:last-child{border-bottom:0;}
+.map-row.current{background:#fafafa; border-radius:10px;}
+.map-name{
+  min-height:34px !important;
+  border:0 !important;
+  background:transparent !important;
+  padding:0 !important;
+  text-align:left;
+  justify-content:flex-start;
+  color:var(--text) !important;
+  font-size:19px !important;
+  font-weight:760 !important;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.depth-1 .map-name{
+  font-size:18px !important;
+  font-weight:620 !important;
+  padding-left:20px !important;
+}
+.depth-1 .map-name::before{content:"└"; color:#c8c4f3; margin-right:8px;}
+.depth-2 .map-name{
+  font-size:16px !important;
+  font-weight:450 !important;
+  font-style:italic;
+  padding-left:44px !important;
+  color:#303847 !important;
+}
+.depth-2 .map-name::before{content:"└"; color:#d8d5f7; margin-right:8px; font-style:normal;}
+.map-levels{display:flex; gap:8px; align-items:center;}
+.map-level{
+  min-height:34px !important;
+  min-width:34px !important;
+  width:34px !important;
+  padding:0 !important;
+  border-radius:9px !important;
+  font-size:16px !important;
+  font-weight:650 !important;
+  background:#fff !important;
+  color:var(--text) !important;
+  border:1px solid var(--line) !important;
+}
+.map-level.current{
+  background:var(--blue) !important;
+  color:#fff !important;
+  border-color:var(--blue) !important;
+}
+.map-level.touched{background:#f0f1f4 !important;}
+.pathline{display:none !important;}
+.preset-panel{
+  margin:8px 0 14px !important;
+  padding:14px !important;
+}
+.preset-panel.show{display:block !important;}
+.more{
+  display:none;
+  margin:8px 0 14px !important;
+  padding:14px !important;
+  color:var(--muted) !important;
+  font-size:16px !important;
+}
+.more.show{display:block !important;}
+@media(max-width:600px){
+  .wrap{width:calc(100vw - 16px) !important; margin:10px auto 28px !important;}
+  .logo{font-size:29px !important;}
+  .slogan{font-size:12px !important;}
+  input{min-height:50px !important; font-size:19px !important;}
+  .input-row{grid-template-columns:1fr 86px !important; gap:8px !important;}
+  #newTopicBtn{font-size:15px !important;}
+  .controls{gap:7px !important;}
+  .controls button{min-height:45px !important; font-size:17px !important; border-radius:12px !important;}
+  #answerBtn{font-size:15px !important;}
+  .answer-card{padding:15px !important;}
+  .title{font-size:24px !important;}
+  .text{font-size:19px !important;}
+  .reading{font-size:17px !important; gap:12px;}
+  .section-toggle{min-height:55px; font-size:19px;}
+  .map-row{gap:6px; min-height:40px;}
+  .map-name{font-size:17px !important;}
+  .depth-1 .map-name{font-size:16px !important; padding-left:14px !important;}
+  .depth-2 .map-name{font-size:15px !important; padding-left:30px !important;}
+  .map-levels{gap:5px;}
+  .map-level{min-height:29px !important; min-width:29px !important; width:29px !important; font-size:14px !important;}
+}
+
 </style>
 </head>
 <body>
 <main class="wrap">
-  <div class="logo">VODY <span class="revtag">rev32</span></div>
+  <div class="logo">VODY <span class="revtag">rev33</span></div>
   <div class="slogan">Natural Learning Platform · Same Subject. Different Resolution.</div>
 
   <div class="input-row">
@@ -740,23 +951,21 @@ button{
     <button id="b3">3</button>
     <button id="answerBtn">Answer</button>
   </div>
-  <div class="ai-status" id="aiStatus">AI: preset answer loaded</div>
-
-  <section class="answer-card">
+  <section class="answer-card" id="answerCard">
     <h1 class="title" id="title">Interest rate</h1>
     <div class="text" id="answerText"></div>
     <div class="visual memory" id="visual" style="display:none;"></div>
     <div id="specialBox"></div>
+    <div class="reading" id="reading"></div>
   </section>
 
-  <div class="label">Knowledge map</div>
-  <div class="map" id="knowledgeMap"></div>
-  <div class="pathline" id="pathLine"></div>
+  <button class="section-toggle open" id="mapToggle">Knowledge map <span class="chev">⌃</span></button>
+  <section class="section-panel show" id="mapPanel">
+    <div class="map" id="knowledgeMap"></div>
+    <div class="pathline" id="pathLine"></div>
+  </section>
 
-  <div class="label">Related reading</div>
-  <div class="reading" id="reading"></div>
-
-  <button class="preset-toggle" id="presetToggle">Preset topics</button>
+  <button class="section-toggle" id="presetToggle">Preset topics <span class="chev">⌄</span></button>
   <div class="preset-panel" id="presetPanel">
     <div class="preset-heading">Field / category</div>
     <div class="preset-grid" id="presetFields"></div>
@@ -764,9 +973,10 @@ button{
     <div class="preset-heading">Topics</div>
     <div class="preset-grid" id="presetTopics"></div>
 
-    <button class="preset-toggle" id="moreBtn">More</button>
-    <div class="more" id="moreText">Later: topic of the day, source mode, and pro/con mode. Rev32 uses real AI through the backend and formats answers as separated idea lines.</div>
   </div>
+
+  <button class="section-toggle" id="moreBtn">More <span class="chev">⌄</span></button>
+  <div class="more" id="moreText">Later: topic of the day, source mode, and pro/con mode. Rev33 keeps the interface clean while preserving live AI connection.</div>
 </main>
 
 <script>
@@ -831,9 +1041,9 @@ async function requestAIForCurrent(){
 
   c.aiLoading[level] = true;
   c.aiError = false;
-  c.levels[level] = `Asking AI for Level ${level}: ${levelName(level)}...`;
+  c.levels[level] = "Asking AI...";
   render();
-  setAIStatus("AI: requesting live answer...");
+  setAIStatus("Asking AI...");
 
   try{
     const response = await fetch(AI_ENDPOINT, {
@@ -860,7 +1070,7 @@ async function requestAIForCurrent(){
     setAIStatus("AI: live answer loaded");
   } catch(err){
     c.aiError = true;
-    c.levels[level] = "AI connection failed. Check that the Rev32 backend is running and that OPENAI_API_KEY is set on the server. No fake browser answer is being shown.";
+    c.levels[level] = "AI connection failed. Check that the Rev33 backend is running and that OPENAI_API_KEY is set on the server. No fake browser answer is being shown.";
     setAIStatus("AI: connection failed", true);
   } finally {
     c.aiLoading[level] = false;
@@ -1428,11 +1638,12 @@ function visualPlainText(kind){
 }
 
 function renderReading(){
-  document.getElementById("reading").innerHTML =
-    `<a target="_blank" href="${searchUrl("beginner explanation")}">Beginner article</a> &nbsp;|&nbsp; ` +
-    `<a target="_blank" href="${searchUrl("visual explanation")}">Visual explanation</a> &nbsp;|&nbsp; ` +
-    `<a target="_blank" href="${searchUrl("practical example")}">Practical example</a> &nbsp;|&nbsp; ` +
-    `<a target="_blank" href="${searchUrl("video")}">Video</a>`;
+  const el = document.getElementById("reading");
+  if(!el) return;
+  el.innerHTML =
+    `<a target="_blank" href="${searchUrl("web articles")}">Web articles</a>` +
+    `<span class="reading-sep">|</span>` +
+    `<a target="_blank" href="${searchUrl("web images")}">Web images</a>`;
 }
 
 function splitIntoIdeaLines(raw){
@@ -1455,8 +1666,12 @@ function splitIntoIdeaLines(raw){
 
   return lines.map(line => {
     let clean = line.replace(/^[-*•]\s*/, "").replace(/^\d+[.)]\s*/, "").trim();
-    return clean ? "• " + clean : "";
+    return clean || "";
   }).filter(Boolean).join("\n");
+}
+
+function displayTitle(title){
+  return String(title || "").replace(/\s*\([^)]*\)\s*$/, "").trim();
 }
 
 function render(){
@@ -1469,8 +1684,13 @@ function render(){
     if(btn) btn.classList.toggle("active", level===n);
   });
   document.getElementById("topicInput").value = c.title;
-  document.getElementById("title").textContent = c.title;
-  document.getElementById("answerText").textContent = splitIntoIdeaLines(c.levels[level] || c.levels[1] || "");
+  const rawText = c.levels[level] || c.levels[1] || "";
+  const isLoading = /^Asking AI/.test(String(rawText).trim());
+  document.getElementById("answerCard").classList.toggle("loading", isLoading);
+  document.getElementById("title").style.display = isLoading ? "none" : "block";
+  document.getElementById("reading").style.display = isLoading ? "none" : "flex";
+  document.getElementById("title").textContent = displayTitle(c.title);
+  document.getElementById("answerText").textContent = isLoading ? "Asking AI..." : splitIntoIdeaLines(rawText);
 
   const visual = document.getElementById("visual");
   const diagram = integralDiagram(c.title);
@@ -1642,25 +1862,23 @@ function calculateLoan(){
     `<b>Total interest:</b> ${money(totalInterest)}`;
 }
 
-function nodeButton(nodeObj, nodePath, depth){
-  const wrap = document.createElement("div");
-  wrap.className = depth === 0 ? "map-root" : (depth === 1 ? "map-node" : "map-child");
-  wrap.dataset.depth = depth;
-
-  const topicButton = document.createElement("button");
+function mapRow(nodeObj, nodePath, depth){
+  const row = document.createElement("div");
   const isCurrent = current().title === nodeObj.title;
   const wasTouched = !!touched[nodeObj.title];
-  topicButton.className = "map-topic" + (isCurrent ? " current" : (wasTouched ? " touched" : ""));
-  topicButton.textContent = nodeObj.title;
-  topicButton.onclick = () => {
+  row.className = "map-row depth-" + depth + (isCurrent ? " current" : (wasTouched ? " touched" : ""));
+
+  const name = document.createElement("button");
+  name.className = "map-name";
+  name.textContent = displayTitle(nodeObj.title);
+  name.onclick = () => {
     path = nodePath.slice();
-    if(nodePath.length >= 2){
-      collapsed[nodePath[0].title + "::" + nodePath[1].title] = false;
-    }
     render();
   };
-  wrap.appendChild(topicButton);
+  row.appendChild(name);
 
+  const levels = document.createElement("div");
+  levels.className = "map-levels";
   [0,1,2,3].forEach(n=>{
     const b = document.createElement("button");
     const currentLevel = isCurrent && n === level;
@@ -1669,15 +1887,12 @@ function nodeButton(nodeObj, nodePath, depth){
     b.textContent = n;
     b.onclick = () => {
       path = nodePath.slice();
-      if(nodePath.length >= 2){
-        collapsed[nodePath[0].title + "::" + nodePath[1].title] = false;
-      }
       setLevel(n);
     };
-    wrap.appendChild(b);
+    levels.appendChild(b);
   });
-
-  return wrap;
+  row.appendChild(levels);
+  return row;
 }
 
 function renderKnowledgeMap(){
@@ -1685,48 +1900,16 @@ function renderKnowledgeMap(){
   box.innerHTML = "";
 
   const rootNode = path[0];
-  box.appendChild(nodeButton(rootNode, [rootNode], 0));
+  box.appendChild(mapRow(rootNode, [rootNode], 0));
 
   Object.keys(rootNode.children || {}).forEach(childName=>{
     const child = rootNode.children[childName];
-    const branch = document.createElement("div");
-    branch.className = "map-branch";
+    box.appendChild(mapRow(child, [rootNode, child], 1));
 
-    const grandchildren = Object.keys(child.children || {});
-    const header = document.createElement("div");
-    header.className = "map-node";
-
-    if(grandchildren.length){
-      const key = rootNode.title + "::" + child.title;
-      if(collapsed[key] === undefined) collapsed[key] = true;
-      const toggle = document.createElement("button");
-      toggle.className = "map-toggle";
-      toggle.textContent = collapsed[key] ? "›" : "⌄";
-      toggle.onclick = () => {
-        collapsed[key] = !collapsed[key];
-        render();
-      };
-      header.appendChild(toggle);
-    }
-
-    const nodePart = nodeButton(child, [rootNode, child], 1);
-    while(nodePart.firstChild){
-      header.appendChild(nodePart.firstChild);
-    }
-    branch.appendChild(header);
-
-    if(grandchildren.length){
-      const key = rootNode.title + "::" + child.title;
-      const childBox = document.createElement("div");
-      childBox.className = "map-children" + (collapsed[key] ? " collapsed" : "");
-      grandchildren.forEach(gcName=>{
-        const gc = child.children[gcName];
-        childBox.appendChild(nodeButton(gc, [rootNode, child, gc], 2));
-      });
-      branch.appendChild(childBox);
-    }
-
-    box.appendChild(branch);
+    Object.keys(child.children || {}).forEach(gcName=>{
+      const gc = child.children[gcName];
+      box.appendChild(mapRow(gc, [rootNode, child, gc], 2));
+    });
   });
 }
 
@@ -1800,8 +1983,20 @@ document.getElementById("newTopicBtn").onclick = () => {
   document.getElementById("topicInput").focus();
 };
 document.getElementById("topicInput").addEventListener("keydown", e=>{ if(e.key==="Enter") document.getElementById("answerBtn").click(); });
-document.getElementById("presetToggle").onclick = () => document.getElementById("presetPanel").classList.toggle("show");
-document.getElementById("moreBtn").onclick = () => document.getElementById("moreText").classList.toggle("show");
+function togglePanel(buttonId, panelId){
+  const btn = document.getElementById(buttonId);
+  const panel = document.getElementById(panelId);
+  if(!btn || !panel) return;
+  btn.onclick = () => {
+    const open = panel.classList.toggle("show");
+    btn.classList.toggle("open", open);
+    const chev = btn.querySelector(".chev");
+    if(chev) chev.textContent = open ? "⌃" : "⌄";
+  };
+}
+togglePanel("mapToggle", "mapPanel");
+togglePanel("presetToggle", "presetPanel");
+togglePanel("moreBtn", "moreText");
 
 const presetData = {
   "Finance": ["Interest rate", "Inflation", "Mortgage"],
