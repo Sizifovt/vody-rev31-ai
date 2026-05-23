@@ -13,11 +13,12 @@ app.use(express.json({ limit: "1mb" }));
 app.use(express.static(__dirname));
 
 function levelRules(level) {
+  const shared = "Format the answer as separated idea lines, not as one paragraph. Use short bullet-style lines. Each line should contain one idea only. Do not use markdown headings.";
   const rules = {
-    0: "Level 0 / Intuition: Do not start with a definition. Start with one concrete scene or familiar situation, show one small change or consequence, then state the idea. 1-3 short sentences. No jargon unless unavoidable.",
-    1: "Level 1 / Familiarization: Simple factual explanation for an adult beginner. Use basic terms, one practical example, and short paragraphs. Avoid intimidation and avoid long textbook prose.",
-    2: "Level 2 / Knowledge: More structured academic explanation. Include main parts, mechanisms, conditions, examples, and limits. Use necessary technical vocabulary but explain it clearly.",
-    3: "Level 3 / Expertise: Precise expert explanation. State assumptions, models, edge cases, evidence, limitations, and distinctions from related ideas. Use domain terminology correctly."
+    0: `Level 0 / Intuition: Do not start with a definition. Start with one concrete scene or familiar situation, show one small change or consequence, then state the idea. Use 2-4 short idea lines. No jargon unless unavoidable. ${shared}`,
+    1: `Level 1 / Familiarization: Simple factual explanation for an adult beginner. Use basic terms, one practical example, and 3-5 short idea lines. Avoid intimidation and avoid long textbook prose. ${shared}`,
+    2: `Level 2 / Knowledge: More structured academic explanation. Include main parts, mechanisms, conditions, examples, and limits. Use necessary technical vocabulary but explain it clearly. Use 4-6 short idea lines. ${shared}`,
+    3: `Level 3 / Expertise: Precise expert explanation. State assumptions, models, edge cases, evidence, limitations, and distinctions from related ideas. Use domain terminology correctly. Use 5-7 compact idea lines. ${shared}`
   };
   return rules[level] || rules[0];
 }
@@ -71,7 +72,7 @@ app.post("/api/vody-answer", async (req, res) => {
       return res.status(500).json({ error: "OPENAI_API_KEY is not set on the server." });
     }
 
-    const developerInstructions = `You are VODY, a natural learning platform. Explain the same subject at different resolution levels. Preserve the exact topic. Do not shift a specific topic into a generic category. For current facts, law, health, tax, politics, prices, or news, briefly state that current verification may be needed. Return valid JSON only, with this exact shape: {"answer":"...","subtopics":["...","...","..."]}. Do not include markdown headings.`;
+    const developerInstructions = `You are VODY, a natural learning platform. Explain the same subject at different resolution levels. Preserve the exact topic. Do not shift a specific topic into a generic category. For current facts, law, health, tax, politics, prices, or news, briefly state that current verification may be needed. Return valid JSON only, with this exact shape: {"answer":"...","subtopics":["...","...","..."]}. The answer value must be bullet-like separate idea lines, using newline characters between ideas. Do not return one solid paragraph. Do not include markdown headings.`;
 
     const userPrompt = `Topic: ${cleanTopic}\nSelected level: ${numericLevel}\nPath: ${(topicPath || []).join(" / ")}\nRule: ${levelRules(numericLevel)}\n\nCreate the answer for this selected level only. Also provide exactly three short subtopic labels for the knowledge map.`;
 
@@ -116,5 +117,5 @@ app.post("/api/vody-answer", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`VODY Rev31 running at http://localhost:${PORT}`);
+  console.log(`VODY Rev32 running at http://localhost:${PORT}`);
 });

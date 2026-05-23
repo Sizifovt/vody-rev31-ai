@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VODY correct layout rev31</title>
+<title>VODY correct layout rev32</title>
 <style>
 :root{
   --blue:#2f5bff;
@@ -725,7 +725,7 @@ button{
 </head>
 <body>
 <main class="wrap">
-  <div class="logo">VODY <span class="revtag">rev31</span></div>
+  <div class="logo">VODY <span class="revtag">rev32</span></div>
   <div class="slogan">Natural Learning Platform · Same Subject. Different Resolution.</div>
 
   <div class="input-row">
@@ -765,7 +765,7 @@ button{
     <div class="preset-grid" id="presetTopics"></div>
 
     <button class="preset-toggle" id="moreBtn">More</button>
-    <div class="more" id="moreText">Later: topic of the day, source mode, and pro/con mode. Rev31 uses real AI only through the backend.</div>
+    <div class="more" id="moreText">Later: topic of the day, source mode, and pro/con mode. Rev32 uses real AI through the backend and formats answers as separated idea lines.</div>
   </div>
 </main>
 
@@ -851,7 +851,7 @@ async function requestAIForCurrent(){
       throw new Error(data.error || "AI backend did not return an answer.");
     }
 
-    c.levels[level] = data.answer;
+    c.levels[level] = splitIntoIdeaLines(data.answer);
     c.aiLoaded[level] = true;
     c.aiError = false;
     if(data.subtopics && Object.keys(c.children || {}).length === 0){
@@ -860,7 +860,7 @@ async function requestAIForCurrent(){
     setAIStatus("AI: live answer loaded");
   } catch(err){
     c.aiError = true;
-    c.levels[level] = "AI connection failed. Check that the Rev31 backend is running and that OPENAI_API_KEY is set on the server. No fake browser answer is being shown.";
+    c.levels[level] = "AI connection failed. Check that the Rev32 backend is running and that OPENAI_API_KEY is set on the server. No fake browser answer is being shown.";
     setAIStatus("AI: connection failed", true);
   } finally {
     c.aiLoading[level] = false;
@@ -1435,6 +1435,30 @@ function renderReading(){
     `<a target="_blank" href="${searchUrl("video")}">Video</a>`;
 }
 
+function splitIntoIdeaLines(raw){
+  let text = String(raw || "").trim();
+  if(!text) return "";
+
+  text = text
+    .replace(/\r\n/g, "\n")
+    .replace(/\r/g, "\n")
+    .replace(/\n{3,}/g, "\n\n");
+
+  let lines = text.split(/\n+/).map(s => s.trim()).filter(Boolean);
+
+  if(lines.length <= 1){
+    const matches = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g);
+    if(matches && matches.length > 1){
+      lines = matches.map(s => s.trim()).filter(Boolean);
+    }
+  }
+
+  return lines.map(line => {
+    let clean = line.replace(/^[-*•]\s*/, "").replace(/^\d+[.)]\s*/, "").trim();
+    return clean ? "• " + clean : "";
+  }).filter(Boolean).join("\n");
+}
+
 function render(){
   const c = current();
   touched[c.title] = touched[c.title] || {};
@@ -1446,7 +1470,7 @@ function render(){
   });
   document.getElementById("topicInput").value = c.title;
   document.getElementById("title").textContent = c.title;
-  document.getElementById("answerText").textContent = c.levels[level] || c.levels[1] || "";
+  document.getElementById("answerText").textContent = splitIntoIdeaLines(c.levels[level] || c.levels[1] || "");
 
   const visual = document.getElementById("visual");
   const diagram = integralDiagram(c.title);

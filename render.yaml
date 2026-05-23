@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: vody-rev31-ai-connected
+    name: vody-rev32-ai-bullets
     env: node
     buildCommand: npm install
     startCommand: npm start
