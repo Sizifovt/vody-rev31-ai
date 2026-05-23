@@ -1,0 +1,1835 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VODY correct layout rev31</title>
+<style>
+:root{
+  --blue:#2f5bff;
+  --bg:#f3f6fb;
+  --card:#fff;
+  --line:#d9dee8;
+  --soft:#eef4ff;
+  --text:#061224;
+  --muted:#5f6f86;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  font-size:17px;
+}
+.wrap{
+  width:min(720px, calc(100vw - 24px));
+  margin:24px auto 40px;
+}
+.logo{
+  font-size:34px;
+  font-weight:800;
+  letter-spacing:-1.2px;
+  color:var(--blue);
+  line-height:1;
+  margin-bottom:2px;
+}
+.slogan{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:12px;
+}
+input{
+  width:100%;
+  min-height:50px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:9px 13px;
+  font-size:23px;
+  outline:none;
+  background:#fff;
+}
+.input-row{
+  display:grid;
+  grid-template-columns:1fr 132px;
+  gap:8px;
+}
+.controls{
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:7px;
+  margin:9px 0 12px;
+}
+button{
+  min-height:46px;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:13px;
+  font-size:18px;
+  font-weight:500;
+  font-family:inherit;
+  cursor:pointer;
+}
+button.active, button.primary{
+  background:var(--blue);
+  color:#fff;
+  border-color:var(--blue);
+}
+.answer-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:12px;
+}
+.title{
+  font-size:26px;
+  font-weight:800;
+  line-height:1.05;
+  margin:0 0 10px;
+}
+.text{
+  font-size:20px;
+  line-height:1.34;
+  white-space:pre-line;
+  margin-bottom:14px;
+}
+.visual{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+  min-height:150px;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:8px;
+  font-size:22px;
+  text-align:center;
+}
+svg{
+  width:100%;
+  max-width:560px;
+  height:auto;
+  display:block;
+}
+.label{
+  color:var(--muted);
+  font-size:16px;
+  margin:9px 0 5px;
+}
+.subtopic{
+  display:grid;
+  grid-template-columns:1fr 48px 48px;
+  gap:7px;
+  align-items:center;
+  border:1px solid #b9cef9;
+  background:var(--soft);
+  border-radius:11px;
+  padding:6px 8px 6px 12px;
+  margin:6px 0;
+}
+.subtopic-name{
+  font-size:18px;
+  font-weight:400;
+}
+.subtopic button{
+  min-height:34px;
+  font-size:17px;
+  border-radius:10px;
+}
+.reading{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:13px;
+  padding:10px 12px;
+  font-size:17px;
+  margin-bottom:12px;
+}
+.reading a{
+  color:#1357ff;
+  text-decoration:none;
+}
+.reading a:hover{
+  text-decoration:underline;
+}
+.navbox{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:13px;
+  padding:10px 12px;
+  min-height:48px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-bottom:8px;
+}
+.small-btn{
+  min-height:31px;
+  padding:4px 11px;
+  font-size:16px;
+  border-radius:10px;
+}
+.clear{
+  width:100%;
+  color:#5f6f86;
+  min-height:44px;
+}
+.preset-toggle{
+  width:100%;
+  margin-top:10px;
+  min-height:42px;
+  font-size:17px;
+}
+.preset-panel{
+  display:none;
+  margin-top:8px;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:13px;
+  padding:10px;
+}
+.preset-panel.show{display:block}
+.preset-grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+.preset-grid button{
+  font-size:15px;
+  min-height:36px;
+  padding:6px 10px;
+  flex:0 0 auto;
+}
+.preset-grid button.selected{
+  background:var(--blue);
+  color:#fff;
+  border-color:var(--blue);
+}
+.preset-heading{
+  color:var(--muted);
+  font-size:14px;
+  font-weight:700;
+  margin:8px 0 5px;
+}
+.more{
+  display:none;
+  margin-top:8px;
+  color:var(--muted);
+  font-size:15px;
+}
+.more.show{display:block}
+.empty{
+  color:var(--muted);
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:11px;
+  padding:10px 12px;
+}
+
+.loan-box{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:14px;
+  padding:12px;
+  margin-top:10px;
+}
+.loan-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+  margin-bottom:8px;
+}
+.loan-grid label{
+  font-size:14px;
+  color:var(--muted);
+  display:block;
+  margin-bottom:4px;
+}
+.loan-grid input{
+  min-height:40px;
+  font-size:18px;
+  padding:7px 9px;
+}
+.loan-result{
+  border-top:1px solid var(--line);
+  padding-top:9px;
+  margin-top:9px;
+  font-size:18px;
+  line-height:1.45;
+}
+.loan-link{
+  display:block;
+  margin-top:8px;
+  color:#1357ff;
+  text-decoration:none;
+}
+.loan-link:hover{text-decoration:underline;}
+
+.memory-label{
+  color:var(--muted);
+  font-size:14px;
+  font-weight:700;
+  margin:8px 0 5px;
+}
+.visual.memory{
+  min-height:92px;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  line-height:1.35;
+  white-space:pre-line;
+}
+.pathline{
+  color:var(--muted);
+  font-size:15px;
+  margin:8px 0 5px;
+}
+.pathline button{
+  min-height:28px;
+  padding:3px 8px;
+  font-size:14px;
+  border-radius:8px;
+  margin:0 2px;
+}
+.map{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:13px;
+  padding:10px;
+  margin-bottom:12px;
+}
+.map-root,
+.map-node,
+.map-child{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:6px 0;
+}
+.map-root{
+  padding-bottom:7px;
+  border-bottom:1px solid var(--line);
+}
+.map-branch{
+  margin:8px 0;
+  padding:8px;
+  border:1px solid #e3e7ef;
+  border-radius:12px;
+  background:#fafafa;
+}
+.map-children{
+  margin-left:18px;
+  padding-left:10px;
+  border-left:2px solid #d5d9e2;
+}
+.map-topic{
+  min-height:32px;
+  padding:4px 10px;
+  font-size:15px;
+  border-radius:10px;
+  background:#fff;
+}
+.map-topic.touched{
+  background:#eeeeee;
+  border-color:#c5c5c5;
+}
+.map-topic.current{
+  background:#d9d9d9;
+  border-color:#9a9a9a;
+  font-weight:900;
+}
+.map-level{
+  min-height:28px;
+  padding:3px 8px;
+  font-size:14px;
+  border-radius:9px;
+}
+.map-level.touched{
+  background:#eeeeee;
+  border-color:#c5c5c5;
+}
+.map-level.current{
+  background:#d9d9d9;
+  border-color:#9a9a9a;
+  color:var(--text);
+}
+
+
+/* Rev20 compact map and optional visual box */
+.memory-label{display:none;}
+.visual.memory{
+  display:none;
+  min-height:90px;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  line-height:1.35;
+  white-space:pre-line;
+}
+.visual.memory.show{
+  display:flex !important;
+}
+.map{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:13px;
+  padding:10px;
+  margin-bottom:12px;
+}
+.map-root{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:6px;
+  padding-bottom:8px;
+  margin-bottom:8px;
+  border-bottom:1px solid var(--line);
+}
+.map-branch{
+  margin:8px 0;
+  padding:8px;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  background:#fafafa;
+}
+.map-node{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-bottom:7px;
+}
+.map-children{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:7px;
+  margin-left:0;
+  padding-left:0;
+  border-left:0;
+}
+.map-child{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  margin:0;
+}
+.map-topic{
+  min-height:31px;
+  padding:4px 10px;
+  font-size:15px;
+  border-radius:10px;
+  background:#fff;
+}
+.map-topic.touched{
+  background:#eeeeee;
+  border-color:#c5c5c5;
+}
+.map-topic.current{
+  background:#d9d9d9;
+  border-color:#9a9a9a;
+  font-weight:900;
+}
+.map-level{
+  min-height:28px;
+  padding:3px 8px;
+  font-size:14px;
+  border-radius:9px;
+}
+.map-level.touched{
+  background:#eeeeee;
+  border-color:#c5c5c5;
+}
+.map-level.current{
+  background:#d9d9d9;
+  border-color:#9a9a9a;
+  color:var(--text);
+}
+.pathline{
+  color:var(--muted);
+  font-size:14px;
+  margin:6px 0 8px;
+}
+.pathline button{
+  min-height:27px;
+  padding:3px 8px;
+  font-size:14px;
+  border-radius:8px;
+  margin:0 2px;
+}
+
+
+/* Rev21: tighter knowledge map */
+.map{
+  padding:6px 8px !important;
+  margin-bottom:8px !important;
+}
+.map-root{
+  gap:4px !important;
+  padding-bottom:5px !important;
+  margin-bottom:5px !important;
+}
+.map-branch{
+  margin:5px 0 !important;
+  padding:6px !important;
+  border-radius:10px !important;
+  background:#f7f7f7 !important;
+}
+.map-node{
+  gap:4px !important;
+  margin-bottom:4px !important;
+}
+.map-children{
+  gap:5px !important;
+  margin-left:10px !important;
+}
+.map-child{
+  gap:3px !important;
+  margin:0 !important;
+}
+.map-topic{
+  min-height:27px !important;
+  padding:3px 8px !important;
+  font-size:15px !important;
+  border-radius:8px !important;
+}
+.map-root .map-topic{
+  font-size:16px !important;
+  font-weight:900 !important;
+  background:#f2f2f2 !important;
+}
+.map-node .map-topic{
+  font-size:15px !important;
+  background:#ffffff !important;
+}
+.map-child .map-topic{
+  font-size:14px !important;
+  background:#ffffff !important;
+}
+.map-level{
+  min-height:25px !important;
+  padding:2px 7px !important;
+  font-size:13px !important;
+  border-radius:8px !important;
+}
+.map-topic.current,
+.map-level.current{
+  background:#d6d6d6 !important;
+  border-color:#8f8f8f !important;
+  color:#000 !important;
+}
+.map-topic.touched,
+.map-level.touched{
+  background:#eeeeee !important;
+  border-color:#c8c8c8 !important;
+}
+.pathline{
+  margin:4px 0 6px !important;
+}
+.pathline button{
+  min-height:25px !important;
+  padding:2px 7px !important;
+  font-size:13px !important;
+}
+
+
+/* Rev22: no inner branch boxes, flatter inline map */
+.map{
+  padding:6px 8px !important;
+}
+.map-root{
+  border-bottom:1px solid var(--line) !important;
+  padding-bottom:5px !important;
+  margin-bottom:5px !important;
+}
+.map-branch{
+  border:0 !important;
+  background:transparent !important;
+  border-radius:0 !important;
+  padding:3px 0 !important;
+  margin:3px 0 !important;
+}
+.map-node{
+  margin-bottom:3px !important;
+}
+.map-children{
+  margin-left:12px !important;
+  padding-left:0 !important;
+  border-left:0 !important;
+  gap:5px !important;
+}
+
+
+/* Rev22: path line quiet italic */
+.pathline{
+  font-style:italic !important;
+  color:#667085 !important;
+}
+.pathline button{
+  font-style:italic !important;
+  color:#4b5563 !important;
+  background:transparent !important;
+  border:0 !important;
+}
+
+
+/* Rev23: tighter map + clearer layer hierarchy */
+.map{
+  padding:4px 6px !important;
+  margin-bottom:6px !important;
+}
+.map-root{
+  gap:3px !important;
+  padding-bottom:4px !important;
+  margin-bottom:3px !important;
+}
+.map-branch{
+  padding:1px 0 !important;
+  margin:1px 0 !important;
+}
+.map-node{
+  gap:3px !important;
+  margin:1px 0 2px !important;
+}
+.map-children{
+  margin-left:12px !important;
+  gap:3px !important;
+}
+.map-child{
+  gap:2px !important;
+}
+.map-root .map-topic{
+  font-size:17px !important;
+  font-weight:900 !important;
+  padding:3px 8px !important;
+  min-height:28px !important;
+}
+.map-node .map-topic{
+  font-size:15px !important;
+  font-weight:700 !important;
+  padding:3px 8px !important;
+  min-height:27px !important;
+}
+.map-child .map-topic{
+  font-size:13px !important;
+  font-weight:500 !important;
+  padding:2px 7px !important;
+  min-height:24px !important;
+}
+.map-level{
+  min-height:23px !important;
+  padding:1px 6px !important;
+  font-size:12px !important;
+}
+.map-root .map-level{
+  min-height:25px !important;
+  font-size:13px !important;
+}
+.map-node .map-level{
+  min-height:24px !important;
+  font-size:12px !important;
+}
+.map-child .map-level{
+  min-height:22px !important;
+  font-size:11px !important;
+}
+
+
+.revtag{
+  font-size:14px;
+  font-weight:500;
+  color:#6b7280;
+  letter-spacing:0;
+  margin-left:6px;
+}
+.map-topic,
+.map-level{
+  font-weight:400 !important;
+}
+.map-topic.current,
+.map-level.current{
+  font-weight:400 !important;
+}
+.map-root .map-topic{
+  font-weight:500 !important;
+}
+.map-toggle{
+  min-height:24px;
+  width:24px;
+  padding:0 !important;
+  font-size:13px !important;
+  border-radius:8px !important;
+}
+.map-children.collapsed{
+  display:none !important;
+}
+.visual.diagram{
+  display:flex !important;
+  min-height:150px;
+  padding:10px;
+}
+.visual.diagram svg{
+  width:100%;
+  max-width:560px;
+  height:auto;
+  display:block;
+}
+
+/* Rev30: iPhone-app-like system typography */
+input,
+button{
+  font-family:inherit;
+  -webkit-tap-highlight-color:transparent;
+}
+.controls button{
+  font-size:18px;
+  font-weight:500;
+}
+#answerBtn{
+  font-weight:500;
+}
+.ai-status{
+  min-height:18px;
+  margin:-4px 0 10px;
+  font-size:12px;
+  color:var(--muted);
+}
+.ai-status.error{
+  color:#9f1239;
+}
+.answer-card{
+  box-shadow:0 1px 2px rgba(6,18,36,0.04);
+}
+
+@media(max-width:600px){
+  .loan-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:600px){
+  .wrap{
+    width:calc(100vw - 18px);
+    margin:14px auto 32px;
+  }
+  .logo{font-size:32px}
+  .title{font-size:25px}
+  .text{font-size:20px}
+  .input-row{grid-template-columns:1fr 108px}
+  #newTopicBtn{font-size:15px}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="logo">VODY <span class="revtag">rev31</span></div>
+  <div class="slogan">Natural Learning Platform · Same Subject. Different Resolution.</div>
+
+  <div class="input-row">
+    <input id="topicInput" value="Interest rate" aria-label="Topic">
+    <button id="newTopicBtn">New topic</button>
+  </div>
+
+  <div class="controls">
+    <button id="b0" class="active">0</button>
+    <button id="b1">1</button>
+    <button id="b2">2</button>
+    <button id="b3">3</button>
+    <button id="answerBtn">Answer</button>
+  </div>
+  <div class="ai-status" id="aiStatus">AI: preset answer loaded</div>
+
+  <section class="answer-card">
+    <h1 class="title" id="title">Interest rate</h1>
+    <div class="text" id="answerText"></div>
+    <div class="visual memory" id="visual" style="display:none;"></div>
+    <div id="specialBox"></div>
+  </section>
+
+  <div class="label">Knowledge map</div>
+  <div class="map" id="knowledgeMap"></div>
+  <div class="pathline" id="pathLine"></div>
+
+  <div class="label">Related reading</div>
+  <div class="reading" id="reading"></div>
+
+  <button class="preset-toggle" id="presetToggle">Preset topics</button>
+  <div class="preset-panel" id="presetPanel">
+    <div class="preset-heading">Field / category</div>
+    <div class="preset-grid" id="presetFields"></div>
+
+    <div class="preset-heading">Topics</div>
+    <div class="preset-grid" id="presetTopics"></div>
+
+    <button class="preset-toggle" id="moreBtn">More</button>
+    <div class="more" id="moreText">Later: topic of the day, source mode, and pro/con mode. Rev31 uses real AI only through the backend.</div>
+  </div>
+</main>
+
+<script>
+const AI_ENDPOINT = "/api/vody-answer";
+
+function setAIStatus(message, isError = false){
+  const el = document.getElementById("aiStatus");
+  if(!el) return;
+  el.textContent = message;
+  el.classList.toggle("error", !!isError);
+}
+
+function levelName(n){
+  return ["Intuition", "Familiarization", "Knowledge", "Expertise"][n] || "Level " + n;
+}
+
+function makeLiveNode(title){
+  const n = node(
+    title,
+    "free",
+    "Connecting to AI for Level 0...",
+    "Connecting to AI for Level 1...",
+    "Connecting to AI for Level 2...",
+    "Connecting to AI for Level 3...",
+    {}
+  );
+  n.live = true;
+  n.aiLoaded = {};
+  n.aiLoading = {};
+  n.aiError = false;
+  return n;
+}
+
+function buildChildrenFromSubtopics(subtopics){
+  const children = {};
+  (subtopics || []).slice(0,3).forEach(item=>{
+    const title = typeof item === "string" ? item : (item.title || item.name || "Subtopic");
+    const child = node(
+      title,
+      "free",
+      `Connect this subtopic to one concrete scene: ${title}.`,
+      `${title} is one important part of the larger topic.`,
+      `${title} can be analyzed by its parts, rules, examples, and limits.`,
+      `At expertise level, ${title} requires definitions, assumptions, evidence, and boundary cases.`,
+      {}
+    );
+    child.live = true;
+    child.aiLoaded = {};
+    child.aiLoading = {};
+    child.aiError = false;
+    children[title] = child;
+  });
+  return children;
+}
+
+async function requestAIForCurrent(){
+  const c = current();
+  if(!c || !c.live || (c.aiLoaded && c.aiLoaded[level]) || (c.aiLoading && c.aiLoading[level])){
+    render();
+    return;
+  }
+
+  c.aiLoading[level] = true;
+  c.aiError = false;
+  c.levels[level] = `Asking AI for Level ${level}: ${levelName(level)}...`;
+  render();
+  setAIStatus("AI: requesting live answer...");
+
+  try{
+    const response = await fetch(AI_ENDPOINT, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        topic:c.title,
+        level,
+        path:path.map(p=>p.title)
+      })
+    });
+
+    const data = await response.json().catch(()=>({}));
+    if(!response.ok || !data.answer){
+      throw new Error(data.error || "AI backend did not return an answer.");
+    }
+
+    c.levels[level] = data.answer;
+    c.aiLoaded[level] = true;
+    c.aiError = false;
+    if(data.subtopics && Object.keys(c.children || {}).length === 0){
+      c.children = buildChildrenFromSubtopics(data.subtopics);
+    }
+    setAIStatus("AI: live answer loaded");
+  } catch(err){
+    c.aiError = true;
+    c.levels[level] = "AI connection failed. Check that the Rev31 backend is running and that OPENAI_API_KEY is set on the server. No fake browser answer is being shown.";
+    setAIStatus("AI: connection failed", true);
+  } finally {
+    c.aiLoading[level] = false;
+    render();
+  }
+}
+
+function setLevel(n){
+  level = n;
+  const c = current();
+  if(c && c.live && !(c.aiLoaded && c.aiLoaded[level])){
+    requestAIForCurrent();
+  } else {
+    render();
+  }
+}
+
+function autoLevel2(title){
+  return `${title} can be studied by separating its parts, rules, conditions, and consequences.\nAt this level, focus on structure: what causes it, what it changes, where it applies, and what limits the simple explanation.`;
+}
+
+function autoLevel3(title){
+  return `At expertise level, ${title} requires precise definitions, assumptions, boundary cases, and evidence.\nA strong expert answer compares models, quantifies effects when possible, and states where the explanation stops being valid.`;
+}
+
+function node(title, visual, l0, l1, arg5 = undefined, arg6 = undefined, arg7 = undefined){
+  let l2, l3, children;
+
+  if(arg5 && typeof arg5 === "object" && !Array.isArray(arg5)){
+    l2 = autoLevel2(title);
+    l3 = autoLevel3(title);
+    children = arg5;
+  } else {
+    l2 = arg5 || autoLevel2(title);
+    l3 = arg6 || autoLevel3(title);
+    children = (arg7 && typeof arg7 === "object") ? arg7 : {};
+  }
+
+  return { title, visual, levels:[l0, l1, l2, l3], children };
+}
+
+const roots = {
+  "interest rate": node(
+    "Interest rate", "money",
+    "You borrow $100 and in one year pay back $103.\nThe extra $3 is interest: the price of using money for time.\nIn this example, the interest rate is 3/100 = 0.03 = 3% per year.",
+    "An interest rate is the price of borrowing money or the reward for saving money, usually written as a percent per year. If the rate is 3%, then $100 for one year produces $3 of interest. With compound interest for two years, the amount becomes $100 × 1.03 × 1.03 = $106.09.",
+    {
+      "Compound interest": node(
+        "Compound interest", "save",
+        "Money grows faster when interest is added back into the total.\nAfter the first year, the next year’s interest is calculated on the larger amount, so time makes the effect build up.",
+        "Compound interest means interest is calculated on the current total, including previous interest. Time makes the effect grow strongly. On a $100,000 home loan, 5% costs about $27,279 interest over 10 years but about $75,377 over 25 years. At 5.5%, it becomes about $30,232 over 10 years and $84,226 over 25 years.",
+        {
+          "Interest on interest": node(
+            "Interest on interest", "save",
+            "After one year, $100 becomes $103.\nIn the second year, the 3% is calculated on $103, so the first $3 starts earning interest too.",
+            "Interest on interest means previous interest becomes part of the new base. At 3%, $100 becomes $103 after one year, then $103 × 1.03 = $106.09 after the second year.",
+            {}
+          ),
+          "Time effect": node(
+            "Time effect", "save",
+            "The longer interest has time to repeat, the more visible the growth becomes.\nOne year looks small; many years can become large.",
+            "Time strongly affects compound interest because each period builds on the previous total. At the same rate, 25 years can create far more total interest than 10 years.",
+            {}
+          ),
+          "Rate effect": node(
+            "Rate effect", "save",
+            "A half-percent difference can look small at first.\nOver a long loan, that small rate difference can become thousands of dollars.",
+            "The rate effect means a small change in interest rate can create a large difference over many years. On a $100,000 loan for 25 years, 5% costs about $75,377 interest, while 5.5% costs about $84,226.",
+            {}
+          )
+        }
+      ),
+      "Central bank rate": node(
+        "Central bank rate", "bank",
+        "A central bank is the bank for the banking system.\nWhen it changes its key rate, banks feel it first, and customer loan and savings rates often move after it.",
+        "A central bank is a public institution that manages money and credit for a country or currency area. In the U.S., the central bank is the Federal Reserve. Its policy rate influences how expensive money is for banks, which then affects mortgage, loan, credit-card, and savings rates.",
+        {
+          "Rate history": node(
+            "Rate history", "bank",
+            "Central bank rates move up and down with economic conditions.\nIn U.S. history, rates were very high during inflation fights and very low during major crises.",
+            "1913: Federal Reserve created. 1930s: low-rate environment. Early 1980s: near 20% at peak. 2008–2015: near 0%. 2020–2021: near 0%. 2022–2024: about 5%+.",
+            {}
+          ),
+          "What affects the rate": node(
+            "What affects the rate", "bank",
+            "If prices rise too fast, the central bank may raise rates.\nIf the economy is weak, it may lower rates to make borrowing easier.",
+            "Central bank rates are affected by inflation, employment, economic growth, credit stress, and financial stability. The same rate can be raised to cool the economy or lowered to support borrowing and spending.",
+            {}
+          ),
+          "Customer loan rates": node(
+            "Customer loan rates", "bank",
+            "The central bank rate is not the rate most customers pay.\nBanks add risk, time, and profit margin, so customer loan rates are usually higher.",
+            "Customer rates usually differ from the central bank rate. Savings rates are usually lower than loan rates. Mortgages are usually higher because they are long loans. Personal loans are higher because borrower risk is higher. Credit cards are often much higher because risk and flexibility are high.",
+            {}
+          )
+        }
+      ),
+      "Calculate your loan": node(
+        "Calculate your loan", "loan",
+        "Change the loan amount, rate, or years and the payment changes immediately.\nA longer loan lowers the monthly payment but usually makes total interest much larger.",
+        "This estimate uses the standard fixed-payment loan formula. It gives a rough monthly payment, total paid, and total interest, but it does not include taxes, insurance, fees, adjustable rates, or lender-specific rules.",
+        {
+          "Monthly payment": node(
+            "Monthly payment", "loan",
+            "For this loan, the monthly payment is the amount you must pay every month.\nChange the loan amount, rate, or years, and this number changes immediately.",
+            "The monthly payment is calculated from the current loan amount, interest rate, and number of months. A longer term usually lowers the monthly payment, but it usually increases the total interest.",
+            {}
+          ),
+          "Total interest": node(
+            "Total interest", "loan",
+            "For this loan, total interest is the extra money you pay above the amount borrowed.\nIt is the hidden cost that grows when the loan lasts longer or the rate is higher.",
+            "Total interest is calculated from the current loan result: total paid minus original loan amount. Compare different years and rates to see how much extra cost the loan creates.",
+            {}
+          ),
+          "Accurate calculator": node(
+            "Accurate calculator", "loan",
+            "This screen gives a rough estimate first.\nFor a real decision, use a full calculator that includes taxes, insurance, fees, and lender details.",
+            "A more accurate calculator can include taxes, insurance, down payment, fees, amortization schedule, adjustable rates, and lender-specific rules.",
+            {}
+          )
+        }
+      )
+    }
+  ),
+
+  "integral": node(
+    "Integral", "integral",
+    "A curved shape is hard to measure at once.\nCut the area into many thin strips, add them, and the total becomes the integral idea.",
+    "An integral measures accumulation. In the graph picture, it is the area under a curve. More formally, it is the limit of a sum: add many small pieces, then let the pieces become smaller and smaller.",
+    {
+      "Area under a curve": node(
+        "Area under a curve", "integral",
+        "Draw a curve above a line.\nThe integral measures the area trapped between the curve and the line.",
+        "The area under a curve is found by adding many narrow vertical slices. Each slice is approximately a rectangle. As the slices become thinner, the sum approaches the true area.",
+        {
+          "Thin strips": node(
+            "Thin strips", "integral",
+            "Each thin strip is almost a rectangle.\nThat makes a curved area easier to estimate.",
+            "Thin strips approximate the area under a curve by using narrow rectangles. The thinner the strips, the closer the estimate can get.",
+            {}
+          ),
+          "More strips": node(
+            "More strips", "integral",
+            "More strips follow the curve more closely.\nThe empty mismatch near the curve becomes smaller.",
+            "Using more strips means each strip is narrower. This usually improves the approximation of the area under the curve.",
+            {}
+          ),
+          "Limit idea": node(
+            "Limit idea", "integral",
+            "Imagine the strips becoming thinner and thinner.\nThe stable value they approach is the integral.",
+            "The limit idea means the integral is the value approached by the sums as the slice widths become smaller and smaller.",
+            {}
+          )
+        }
+      ),
+      "Integral of velocity": node(
+        "Integral of velocity", "math",
+        "A car’s speed changes during a trip.\nIf you add all the tiny pieces of speed over time, you get how far the motion adds up.",
+        "The integral of velocity over time gives displacement. If velocity stays positive, displacement equals distance traveled. If velocity becomes negative, the integral subtracts that part because the motion is in the opposite direction.",
+        {
+          "Distance traveled": node(
+            "Distance traveled", "math",
+            "If the car keeps moving forward, adding velocity over time gives the distance traveled.",
+            "When velocity is positive, the integral of velocity over time gives the distance traveled over that time interval.",
+            {}
+          ),
+          "Positive and negative velocity": node(
+            "Positive and negative velocity", "math",
+            "Forward motion can add, and backward motion can subtract.\nThe integral keeps track of direction.",
+            "Positive velocity contributes positive area. Negative velocity contributes negative area, so the integral gives net displacement.",
+            {}
+          ),
+          "Area under velocity graph": node(
+            "Area under velocity graph", "math",
+            "On a speed-time graph, the area under the graph represents how much motion accumulated.",
+            "For a velocity-time graph, the area under the curve over a time interval gives displacement; if velocity is positive, it gives distance traveled.",
+            {}
+          )
+        }
+      ),
+      "Definite integral": node(
+        "Definite integral", "integral",
+        "You choose a start point and an end point.\nA definite integral adds only what happens between those two limits.",
+        "A definite integral gives one accumulated value between a lower limit and an upper limit. Unlike an indefinite integral, which gives a general function, a definite integral uses specific limits and returns one number.",
+        {
+          "Lower and upper limits": node(
+            "Lower and upper limits", "integral",
+            "The lower limit says where to start.\nThe upper limit says where to stop.",
+            "Lower and upper limits define the interval over which the definite integral is calculated.",
+            {}
+          ),
+          "Area under a parabola": node(
+            "Area under a parabola", "integral",
+            "Choose two x-values on a parabola.\nThe definite integral measures only the area between those x-values.",
+            "A definite integral can calculate the area under a curve such as y = x² between a lower and upper x-value.",
+            {}
+          ),
+          "Distance from velocity graph": node(
+            "Distance from velocity graph", "math",
+            "Choose two times on a velocity graph.\nThe definite integral gives the motion accumulated between those times.",
+            "A definite integral of velocity from one time to another gives displacement over that time interval.",
+            {}
+          )
+        }
+      )
+    }
+  ),
+
+  "derivative": node("Derivative","math","A speedometer does not wait for the whole trip.\nIt shows how fast position is changing right now; that is the derivative idea.","A derivative measures instantaneous rate of change. On a graph, it is the slope of the tangent line at one point.",{
+        "Instant speed": node("Instant speed","free","Focus on Instant speed as one small part of the topic.\nThis makes the larger idea easier to see.","Instant speed is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Tangent slope": node("Tangent slope","free","Focus on Tangent slope as one small part of the topic.\nThis makes the larger idea easier to see.","Tangent slope is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Small change ratio": node("Small change ratio","free","Focus on Small change ratio as one small part of the topic.\nThis makes the larger idea easier to see.","Small change ratio is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "probability": node("Probability","math","You roll a die and cannot know the next face.\nBut after many rolls, a pattern appears. Probability is the number language for that uncertainty.","Probability measures how likely an event is, from 0 impossible to 1 certain. It is used for uncertain events with stable patterns.",{
+        "Chance": node("Chance","free","Focus on Chance as one small part of the topic.\nThis makes the larger idea easier to see.","Chance is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Many trials": node("Many trials","free","Focus on Many trials as one small part of the topic.\nThis makes the larger idea easier to see.","Many trials is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Expected outcome": node("Expected outcome","free","Focus on Expected outcome as one small part of the topic.\nThis makes the larger idea easier to see.","Expected outcome is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "artificial intelligence": node("Artificial intelligence","ai","A computer sees many examples and starts finding patterns in new ones.\nThat is the basic idea of artificial intelligence.","Artificial intelligence is software that performs tasks associated with human judgment, such as recognizing images, understanding language, making predictions, or generating text.",{
+        "Machine learning": node("Machine learning","free","Focus on Machine learning as one small part of the topic.\nThis makes the larger idea easier to see.","Machine learning is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Generative AI": node("Generative AI","free","Focus on Generative AI as one small part of the topic.\nThis makes the larger idea easier to see.","Generative AI is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "AI mistakes": node("AI mistakes","free","Focus on AI mistakes as one small part of the topic.\nThis makes the larger idea easier to see.","AI mistakes is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "large language model": node("Large language model","ai","A system reads enormous amounts of text and learns which words tend to fit together.\nThen it answers by continuing patterns in language.","A large language model is an AI model trained on text to predict and generate language. It can answer, summarize, translate, and draft text.",{
+        "Text prediction": node("Text prediction","free","Focus on Text prediction as one small part of the topic.\nThis makes the larger idea easier to see.","Text prediction is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Training data": node("Training data","free","Focus on Training data as one small part of the topic.\nThis makes the larger idea easier to see.","Training data is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Prompt response": node("Prompt response","free","Focus on Prompt response as one small part of the topic.\nThis makes the larger idea easier to see.","Prompt response is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "ai hallucination": node("AI hallucination","ai","An AI gives an answer that sounds smooth but is not true.\nThat mistake is called a hallucination because confidence replaces verification.","AI hallucination is an incorrect or unsupported output that appears plausible. It can happen when the model lacks grounding or reliable context.",{
+        "Plausible error": node("Plausible error","free","Focus on Plausible error as one small part of the topic.\nThis makes the larger idea easier to see.","Plausible error is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Missing grounding": node("Missing grounding","free","Focus on Missing grounding as one small part of the topic.\nThis makes the larger idea easier to see.","Missing grounding is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Verification": node("Verification","free","Focus on Verification as one small part of the topic.\nThis makes the larger idea easier to see.","Verification is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "computer chip": node("Computer chip","tech","A tiny piece of material contains many switches.\nBy turning those switches on and off, a chip makes computers work.","A computer chip is an integrated circuit containing many electronic components, especially transistors, that process or store information.",{
+        "Transistors": node("Transistors","free","Focus on Transistors as one small part of the topic.\nThis makes the larger idea easier to see.","Transistors is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Circuits": node("Circuits","free","Focus on Circuits as one small part of the topic.\nThis makes the larger idea easier to see.","Circuits is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Manufacturing": node("Manufacturing","free","Focus on Manufacturing as one small part of the topic.\nThis makes the larger idea easier to see.","Manufacturing is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "semiconductor": node("Semiconductor","tech","Some materials are not full conductors and not full insulators.\nA semiconductor can be controlled, which makes modern electronics possible.","A semiconductor is a material whose electrical conductivity can be controlled. Silicon is the most common semiconductor in chips.",{
+        "Conductivity": node("Conductivity","free","Focus on Conductivity as one small part of the topic.\nThis makes the larger idea easier to see.","Conductivity is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Doping": node("Doping","free","Focus on Doping as one small part of the topic.\nThis makes the larger idea easier to see.","Doping is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Device behavior": node("Device behavior","free","Focus on Device behavior as one small part of the topic.\nThis makes the larger idea easier to see.","Device behavior is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "3d printing": node("3D printing","tech","Instead of cutting a shape from a block, a printer builds it layer by layer.\nThat is the basic idea of 3D printing.","3D printing is additive manufacturing. It creates objects by depositing or solidifying material in layers from a digital model.",{
+        "Layer deposition": node("Layer deposition","free","Focus on Layer deposition as one small part of the topic.\nThis makes the larger idea easier to see.","Layer deposition is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Material choice": node("Material choice","free","Focus on Material choice as one small part of the topic.\nThis makes the larger idea easier to see.","Material choice is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Print quality": node("Print quality","free","Focus on Print quality as one small part of the topic.\nThis makes the larger idea easier to see.","Print quality is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "non-holonomic mechanical systems": node("Non-holonomic mechanical systems","wheel","A wheel can roll forward, but it cannot move sideways without slipping.\nA non-holonomic system is controlled by this kind of motion rule.","A non-holonomic mechanical system has constraints on possible velocities that cannot be reduced to simple position-only constraints.",{
+        "Rolling constraint": node("Rolling constraint","free","Focus on Rolling constraint as one small part of the topic.\nThis makes the larger idea easier to see.","Rolling constraint is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Allowed motion": node("Allowed motion","free","Focus on Allowed motion as one small part of the topic.\nThis makes the larger idea easier to see.","Allowed motion is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Path dependence": node("Path dependence","free","Focus on Path dependence as one small part of the topic.\nThis makes the larger idea easier to see.","Path dependence is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "newton's laws": node("Newton's laws","mechanics","A hockey puck keeps sliding unless something changes its motion.\nNewton's laws explain how force, mass, and motion fit together.","Newton's laws are three basic rules of classical mechanics: objects keep their motion unless acted on, force changes motion according to F = ma, and forces come in equal-opposite pairs.",{
+        "First law": node("First law","mechanics","A book stays on the table, and a puck keeps sliding unless a force changes it.\nThe first law is the rule of inertia.","Newton's first law says an object remains at rest or in uniform straight-line motion unless acted on by a net external force.",{}),
+        "Second law": node("Second law","mechanics","Push the same cart harder and it accelerates more; load it heavier and it accelerates less.\nThe second law connects force, mass, and acceleration.","Newton's second law says net force equals mass times acceleration: F = ma.",{}),
+        "Force": node("Force","mechanics","You push a box and it starts moving.\nForce is the push or pull that can change motion.","Force is an interaction that can change an object's motion or shape. In mechanics, net force equals mass times acceleration.",{})
+      }),
+
+  "oscillation": node("Oscillation","mechanics","A swing moves forward, slows, comes back, and repeats.\nOscillation is repeated motion around a middle position.","Oscillation is back-and-forth motion around equilibrium. It often involves inertia and a restoring effect.",{
+        "Back-and-forth motion": node("Back-and-forth motion","free","Focus on Back-and-forth motion as one small part of the topic.\nThis makes the larger idea easier to see.","Back-and-forth motion is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Restoring effect": node("Restoring effect","free","Focus on Restoring effect as one small part of the topic.\nThis makes the larger idea easier to see.","Restoring effect is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Period": node("Period","free","Focus on Period as one small part of the topic.\nThis makes the larger idea easier to see.","Period is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "portugal": node("Portugal","portugal","On the far western edge of Europe, Portugal faces the Atlantic like a narrow door to the ocean.\nIts language, coast, and old sea routes give it a clear face.","Portugal is a country on the Iberian Peninsula, west of Spain. Its capital is Lisbon, its main language is Portuguese, and it is a parliamentary republic.",{
+        "Map face": node("Map face","free","Focus on Map face as one small part of the topic.\nThis makes the larger idea easier to see.","Map face is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Language and culture": node("Language and culture","free","Focus on Language and culture as one small part of the topic.\nThis makes the larger idea easier to see.","Language and culture is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Europe and Atlantic": node("Europe and Atlantic","free","Focus on Europe and Atlantic as one small part of the topic.\nThis makes the larger idea easier to see.","Europe and Atlantic is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "japan": node("Japan","place","Japan is a chain of islands on the edge of East Asia.\nThe sea, mountains, cities, and language give it a distinct shape.","Japan is an island country in East Asia. Its capital is Tokyo, its main language is Japanese, and it has a constitutional monarchy with parliamentary government.",{
+        "Island geography": node("Island geography","free","Focus on Island geography as one small part of the topic.\nThis makes the larger idea easier to see.","Island geography is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Tokyo and regions": node("Tokyo and regions","free","Focus on Tokyo and regions as one small part of the topic.\nThis makes the larger idea easier to see.","Tokyo and regions is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Language and culture": node("Language and culture","free","Focus on Language and culture as one small part of the topic.\nThis makes the larger idea easier to see.","Language and culture is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "california": node("California","place","California stretches along the Pacific with mountains, farms, deserts, and huge cities.\nIt is both a place and a major economic engine.","California is a U.S. state on the Pacific coast. It is known for technology, agriculture, entertainment, ports, climate diversity, and water challenges.",{
+        "Pacific coast": node("Pacific coast","free","Focus on Pacific coast as one small part of the topic.\nThis makes the larger idea easier to see.","Pacific coast is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Technology economy": node("Technology economy","free","Focus on Technology economy as one small part of the topic.\nThis makes the larger idea easier to see.","Technology economy is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Water and climate": node("Water and climate","free","Focus on Water and climate as one small part of the topic.\nThis makes the larger idea easier to see.","Water and climate is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "renaissance": node("Renaissance","culture","Artists, thinkers, and patrons looked back to ancient Greece and Rome and made something new.\nThat rebirth is the Renaissance.","The Renaissance was a European cultural movement emphasizing classical learning, humanism, art, science, and new forms of inquiry.",{
+        "Humanism": node("Humanism","free","Focus on Humanism as one small part of the topic.\nThis makes the larger idea easier to see.","Humanism is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Art and science": node("Art and science","free","Focus on Art and science as one small part of the topic.\nThis makes the larger idea easier to see.","Art and science is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "City patrons": node("City patrons","free","Focus on City patrons as one small part of the topic.\nThis makes the larger idea easier to see.","City patrons is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "modern art": node("Modern art","culture","An artist stops trying only to copy the visible world.\nShape, color, material, and idea become the main event.","Modern art is art that broke from traditional realism and academic conventions, often emphasizing abstraction, experiment, and individual vision.",{
+        "Breaking realism": node("Breaking realism","free","Focus on Breaking realism as one small part of the topic.\nThis makes the larger idea easier to see.","Breaking realism is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "New forms": node("New forms","free","Focus on New forms as one small part of the topic.\nThis makes the larger idea easier to see.","New forms is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Viewer interpretation": node("Viewer interpretation","free","Focus on Viewer interpretation as one small part of the topic.\nThis makes the larger idea easier to see.","Viewer interpretation is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "architecture": node("Architecture","culture","A building is not only shelter.\nIts structure, space, and public face shape how people move and feel.","Architecture is the design of buildings and spaces. It combines function, structure, materials, aesthetics, and cultural meaning.",{
+        "Structure": node("Structure","free","Focus on Structure as one small part of the topic.\nThis makes the larger idea easier to see.","Structure is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Space": node("Space","free","Focus on Space as one small part of the topic.\nThis makes the larger idea easier to see.","Space is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Public meaning": node("Public meaning","free","Focus on Public meaning as one small part of the topic.\nThis makes the larger idea easier to see.","Public meaning is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "to kill a mockingbird": node("To Kill a Mockingbird","book","A child watches adults in her town act polite, afraid, brave, and unfair.\nThe trial makes the town's hidden rules visible.","To Kill a Mockingbird is a novel by Harper Lee about childhood, racism, justice, and moral courage in the American South.",{
+        "Scout's view": node("Scout's view","free","Focus on Scout's view as one small part of the topic.\nThis makes the larger idea easier to see.","Scout's view is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Race and law": node("Race and law","free","Focus on Race and law as one small part of the topic.\nThis makes the larger idea easier to see.","Race and law is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Moral courage": node("Moral courage","free","Focus on Moral courage as one small part of the topic.\nThis makes the larger idea easier to see.","Moral courage is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "war and peace": node("War and Peace","book","Families live, love, argue, and suffer while Napoleon's war moves across history.\nTolstoy shows private life inside a giant historical storm.","War and Peace is a novel by Leo Tolstoy about Russian aristocratic families during the Napoleonic wars. It combines family story, war, history, and philosophy.",{
+        "Family and history": node("Family and history","free","Focus on Family and history as one small part of the topic.\nThis makes the larger idea easier to see.","Family and history is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Napoleonic war": node("Napoleonic war","free","Focus on Napoleonic war as one small part of the topic.\nThis makes the larger idea easier to see.","Napoleonic war is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Tolstoy's view": node("Tolstoy's view","free","Focus on Tolstoy's view as one small part of the topic.\nThis makes the larger idea easier to see.","Tolstoy's view is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "hamlet": node("Hamlet","book","A prince learns that something is rotten in the court, but action is not simple.\nHamlet is the drama of revenge slowed by thought.","Hamlet is a tragedy by William Shakespeare about revenge, uncertainty, corruption, grief, and moral hesitation.",{
+        "Revenge problem": node("Revenge problem","free","Focus on Revenge problem as one small part of the topic.\nThis makes the larger idea easier to see.","Revenge problem is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Delay and doubt": node("Delay and doubt","free","Focus on Delay and doubt as one small part of the topic.\nThis makes the larger idea easier to see.","Delay and doubt is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Court corruption": node("Court corruption","free","Focus on Court corruption as one small part of the topic.\nThis makes the larger idea easier to see.","Court corruption is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "stranger things": node("Stranger Things","series","Kids in a quiet town notice something impossible under ordinary life.\nThe story grows from friendship and a hidden world pressing into the normal one.","Stranger Things is a Netflix science-fiction horror series set mainly in a small American town.",{
+        "Ordinary town": node("Ordinary town","free","Focus on Ordinary town as one small part of the topic.\nThis makes the larger idea easier to see.","Ordinary town is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Hidden world": node("Hidden world","free","Focus on Hidden world as one small part of the topic.\nThis makes the larger idea easier to see.","Hidden world is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Kids investigate": node("Kids investigate","free","Focus on Kids investigate as one small part of the topic.\nThis makes the larger idea easier to see.","Kids investigate is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "star wars": node("Star Wars","series","A young person leaves ordinary life and joins a fight against an empire.\nStar Wars turns space adventure into myth.","Star Wars is a science-fantasy media franchise about rebellion, empire, family, power, and the Force.",{
+        "Hero journey": node("Hero journey","free","Focus on Hero journey as one small part of the topic.\nThis makes the larger idea easier to see.","Hero journey is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Empire and rebellion": node("Empire and rebellion","free","Focus on Empire and rebellion as one small part of the topic.\nThis makes the larger idea easier to see.","Empire and rebellion is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Mythic space": node("Mythic space","free","Focus on Mythic space as one small part of the topic.\nThis makes the larger idea easier to see.","Mythic space is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      }),
+
+  "the matrix": node("The Matrix","series","A man discovers that normal life may be a constructed illusion.\nThe Matrix asks what reality is when perception can be controlled.","The Matrix is a science-fiction film about simulation, control, freedom, identity, and the boundary between perceived and real worlds.",{
+        "Simulation": node("Simulation","free","Focus on Simulation as one small part of the topic.\nThis makes the larger idea easier to see.","Simulation is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Choice and control": node("Choice and control","free","Focus on Choice and control as one small part of the topic.\nThis makes the larger idea easier to see.","Choice and control is a first-layer subtopic. It gives one practical entry point into the larger subject.",{}),
+        "Reality test": node("Reality test","free","Focus on Reality test as one small part of the topic.\nThis makes the larger idea easier to see.","Reality test is a first-layer subtopic. It gives one practical entry point into the larger subject.",{})
+      })
+};
+
+const levelOverrides = {
+  "Interest rate": {
+    2: "Interest rate is a rate of exchange between present money and future money. It is usually quoted as a percent per year, but the actual cost depends on compounding frequency, loan term, credit risk, inflation expectations, and fees.\n\nFor a simple annual example, borrowing $100 at 3% for one year gives $3 interest. For a compound example, the balance evolves by multiplying by 1 + r each period.",
+    3: "At expert level, an interest rate is not a single universal price. It can be nominal or real, simple or effective, fixed or variable, risk-free or credit-adjusted, short-term or term-structured.\n\nPrecise analysis requires the compounding convention, time basis, cash-flow schedule, inflation assumption, default risk, liquidity premium, and whether the quoted rate is APR, APY, yield, discount rate, or policy rate."
+  },
+  "Compound interest": {
+    2: "Compound interest is exponential growth or cost created by reinvesting interest into the principal. The basic discrete model is amount = principal × (1 + rate)^periods.\n\nThe key structural point is that the base changes after every period: interest changes the amount on which the next interest is calculated.",
+    3: "At expert level, compound interest is a discrete-time accumulation model. The correct result depends on compounding interval, nominal versus effective rate, day-count convention, cash-flow timing, fees, amortization, and whether additional deposits or withdrawals occur.\n\nContinuous compounding is the limiting case as the compounding interval becomes infinitesimal."
+  },
+  "Central bank rate": {
+    2: "A central bank rate is a policy instrument that influences bank funding costs, short-term market rates, credit conditions, inflation pressure, and aggregate demand.\n\nIt does not mechanically set every customer rate. Commercial rates include duration, borrower risk, collateral, regulation, competition, and bank margin.",
+    3: "At expert level, the policy rate works through a transmission mechanism: expectations, yield curves, interbank funding, asset prices, exchange rates, credit spreads, and balance-sheet constraints.\n\nThe same policy rate can have different effects depending on inflation credibility, banking stress, fiscal conditions, and market expectations."
+  },
+  "Calculate your loan": {
+    2: "A fixed-payment loan uses an amortization structure. Each monthly payment includes interest on the current balance plus principal reduction. Early payments are mostly interest; later payments reduce principal faster.\n\nThe calculator here estimates payment, total paid, and total interest from amount, annual rate, and term.",
+    3: "At expert level, loan cost analysis must distinguish nominal APR, effective annual rate, points, fees, prepayment risk, taxes, insurance, escrow, amortization schedule, and refinancing options.\n\nThe simple formula is useful for comparison, but a binding financial decision needs the actual lender terms and full cash-flow model."
+  },
+  "Integral": {
+    2: "An integral is a limiting accumulation process. It starts with many small approximating pieces, usually rectangles, adds their contributions, and then takes the limit as the pieces become arbitrarily small.\n\nIn geometry, this gives area. In physics, the same idea gives accumulated quantities such as displacement from velocity or work from force.",
+    3: "At expert level, integration depends on the mathematical setting: Riemann, Lebesgue, improper, line, surface, or measure-theoretic integration.\n\nThe central issue is not only adding pieces, but defining what counts as a valid partition, convergence, integrability, and what happens at discontinuities, singularities, or higher-dimensional domains."
+  },
+  "Area under a curve": {
+    2: "Area under a curve is computed by approximating the region with narrow rectangles or other simple shapes. The integral is the limit of these sums.\n\nWhen the curve is above the axis, the signed area is positive. When it is below the axis, the signed area is negative.",
+    3: "At expert level, area under a curve requires attention to signed area, absolute area, integrability, coordinate choice, discontinuities, and numerical approximation error.\n\nFor empirical or sampled curves, the area is estimated by quadrature methods rather than exact symbolic integration."
+  },
+  "Integral of velocity": {
+    2: "The integral of velocity over time gives displacement. Positive velocity contributes positive displacement; negative velocity contributes negative displacement.\n\nIf the object never reverses direction, displacement and distance traveled are the same. If it reverses, total distance requires integrating speed, not signed velocity.",
+    3: "At expert level, velocity integration is a reconstruction problem. Position is recovered up to an initial condition, and measurement noise, sampling rate, coordinate frame, and sign convention all matter.\n\nIn mechanics, this distinction separates displacement, path length, and state estimation."
+  },
+  "Definite integral": {
+    2: "A definite integral accumulates a quantity between a lower limit and an upper limit. It returns one number, not a family of functions.\n\nThe limits define the interval, and the sign of the function determines whether each part adds or subtracts.",
+    3: "At expert level, definite integration involves the integrand, domain, measure, orientation, convergence, and interpretation of limits.\n\nChanging variables, improper limits, discontinuities, or parameter-dependent integrals can change both the technical conditions and the physical meaning."
+  },
+  "Newton's laws": {
+    2: "Newton's laws form the basic model of classical mechanics. The first law defines inertial motion, the second relates net force to acceleration, and the third states that interacting bodies exert equal and opposite forces on each other.\n\nThey work best for macroscopic objects moving much slower than light, when quantum and relativistic effects are negligible.",
+    3: "At expert level, Newton's laws are a framework for inertial frames, force modeling, constraints, reference frames, and differential equations of motion.\n\nTheir limits appear in non-inertial frames, relativistic speeds, quantum regimes, continuum mechanics, and systems where force laws are replaced by energy, variational, or field descriptions."
+  },
+  "First law": {
+    2: "Newton's first law defines inertia: without a net external force, an object preserves its state of rest or uniform straight-line motion.\n\nThis law is also a statement about inertial reference frames, not only about individual objects.",
+    3: "At expert level, the first law is a frame-selection principle. It identifies inertial frames in which free particles move with constant velocity.\n\nApparent violations often come from hidden interactions, friction, constraints, or using a non-inertial frame."
+  },
+  "Second law": {
+    2: "Newton's second law states that net force produces acceleration. In the common constant-mass form, F = ma.\n\nThe direction of acceleration follows the net force, and larger mass reduces acceleration for the same net force.",
+    3: "At expert level, the second law is more generally expressed through momentum balance. For constrained, variable-mass, rotating, or continuum systems, the simple F = ma form must be used with care.\n\nModeling depends on identifying all external forces and the correct coordinates."
+  },
+  "Force": {
+    2: "Force is an interaction that can change motion or deform a body. In Newtonian mechanics, the net force determines acceleration.\n\nForces may be contact forces, such as friction and normal force, or field forces, such as gravity and electromagnetism.",
+    3: "At expert level, force is model-dependent. It may be represented as a vector field, constraint reaction, generalized force, stress distribution, or derivative of potential energy.\n\nIn advanced mechanics, the same dynamics may be formulated without force as the primary concept."
+  },
+  "Portugal": {
+    2: "Portugal is a western European state on the Atlantic side of the Iberian Peninsula. Its geography makes the ocean central: coast, trade, fishing, navigation, and contact with the wider Portuguese-speaking world.\n\nIts capital is Lisbon; the main language is Portuguese; the political system is a parliamentary republic.",
+    3: "At expert level, Portugal is best understood through geography, Atlantic orientation, Iberian history, maritime empire, European Union membership, language networks, demographics, tourism, energy, and regional inequality.\n\nA serious analysis should separate mainland Portugal, the Azores, Madeira, Lisbon, Porto, and interior regions."
+  },
+  "Artificial intelligence": {
+    2: "Artificial intelligence is a family of computational methods that perform tasks associated with perception, language, prediction, planning, and decision support.\n\nModern AI often uses statistical learning: systems infer patterns from data rather than being explicitly programmed for every case.",
+    3: "At expert level, AI must be separated into model class, objective function, data distribution, training procedure, evaluation metric, deployment context, and failure modes.\n\nImportant technical issues include generalization, bias, robustness, interpretability, alignment, hallucination, and distribution shift."
+  },
+  "Large language model": {
+    2: "A large language model is trained to predict and generate text from patterns in large text datasets. It represents language statistically and can perform many tasks through prompting.\n\nIts strengths come from broad pattern learning; its weaknesses come from lack of guaranteed grounding, memory limits, and possible hallucination.",
+    3: "At expert level, an LLM is a high-dimensional probabilistic sequence model, usually transformer-based, trained with self-supervised objectives and often refined with instruction tuning or preference optimization.\n\nEvaluation requires task benchmarks, calibration checks, factuality tests, safety analysis, and domain-specific validation."
+  }
+};
+
+function applyLevelOverrides(){
+  function visit(n){
+    if(levelOverrides[n.title]){
+      Object.keys(levelOverrides[n.title]).forEach(k=>{
+        n.levels[Number(k)] = levelOverrides[n.title][k];
+      });
+    }
+    Object.keys(n.children || {}).forEach(name=>visit(n.children[name]));
+  }
+  Object.keys(roots).forEach(key=>visit(roots[key]));
+}
+applyLevelOverrides();
+
+
+const memoryBoxes = {
+  "Interest rate": {
+    0: "$100 borrowed → $103 repaid\nextra $3 = interest",
+    1: "interest rate = interest / principal\n3 / 100 = 0.03 = 3% per year"
+  },
+  "Compound interest": {
+    0: "Year 0: $100\nYear 1: $103\nYear 2: $106.09\ninterest grows on interest",
+    1: "Amount = principal × (1 + rate)^years\n$100 × 1.03 × 1.03 = $106.09"
+  },
+  "Interest on interest": {
+    0: "$3 interest becomes part of the next base\nnext interest is calculated on $103",
+    1: "Year 1 base: $100\nYear 2 base: $103\nnew base = principal + previous interest"
+  },
+  "Time effect": {
+    0: "More years → more compounding steps\nsmall growth becomes large over time",
+    1: "same rate + longer time = much larger total\n10 years vs 25 years changes total interest strongly"
+  },
+  "Rate effect": {
+    0: "5% and 5.5% look close\nover many years, the gap grows",
+    1: "small rate difference × many years = large cost difference\n5% ≠ 5.5% on a long loan"
+  },
+  "Central bank rate": {
+    0: "central bank rate ↑\nbank cost ↑\ncustomer loan rates often ↑",
+    1: "Fed policy rate → bank funding cost → mortgage / loan / savings rates"
+  },
+  "Rate history": {
+    0: "Rates rise in inflation fights\nRates fall in crises",
+    1: "1913: Federal Reserve created\n1930s: low\nearly 1980s: very high\n2008–2015: near 0\n2022–2024: about 5%+"
+  },
+  "What affects the rate": {
+    0: "inflation high → rates may rise\neconomy weak → rates may fall",
+    1: "rate decision depends on:\ninflation + jobs + growth + credit stress"
+  },
+  "Customer loan rates": {
+    0: "customer rate = central bank influence + bank additions",
+    1: "customer loan rate ≈ base rate + risk + time + bank margin"
+  },
+  "Calculate your loan": {
+    0: "Change amount / rate / years\npayment and total interest change",
+    1: "Inputs:\nloan amount, rate, years\nOutputs:\nmonthly payment, total paid, total interest"
+  },
+  "Monthly payment": {
+    0: "monthly payment = one repeated payment each month",
+    1: "payment depends on:\nloan amount + interest rate + number of months"
+  },
+  "Total interest": {
+    0: "total interest = extra money paid above the loan",
+    1: "total interest = total paid − original loan amount"
+  },
+  "Accurate calculator": {
+    0: "rough estimate first\nfull calculator for real planning",
+    1: "external calculator adds:\ntaxes, insurance, fees, amortization, lender details"
+  }
+};
+
+
+const optionalBoxes = {
+  "Interest rate": {
+    1: "interest rate = interest / principal\n3 / 100 = 0.03 = 3% per year"
+  },
+  "Compound interest": {
+    1: "Amount = principal × (1 + rate)^years\n$100 × 1.03 × 1.03 = $106.09"
+  },
+  "Rate history": {
+    1: "1913: Federal Reserve created\n1930s: low\nearly 1980s: very high\n2008–2015: near 0\n2022–2024: about 5%+"
+  }
+};
+
+let touched = {};
+let collapsed = {};
+
+let level = 0;
+let path = [roots["interest rate"]];
+
+function current(){ return path[path.length - 1]; }
+function normalize(s){ return s.trim().toLowerCase(); }
+
+function svgIntegral(){
+return `<svg viewBox="0 0 640 210" role="img" aria-label="Integral thin strips">
+  <line x1="105" y1="180" x2="545" y2="180" stroke="#697386" stroke-width="3"/>
+  <line x1="105" y1="30" x2="105" y2="180" stroke="#697386" stroke-width="3"/>
+  <path d="M120 160 C180 55, 275 35, 355 105 C430 170, 500 135, 535 58" fill="none" stroke="#2563eb" stroke-width="7"/>
+  <g fill="#e9f1ff" stroke="#2563eb" stroke-width="2">
+    <rect x="145" y="124" width="28" height="56"/>
+    <rect x="177" y="94" width="28" height="86"/>
+    <rect x="209" y="70" width="28" height="110"/>
+    <rect x="241" y="58" width="28" height="122"/>
+    <rect x="273" y="70" width="28" height="110"/>
+    <rect x="305" y="88" width="28" height="92"/>
+    <rect x="337" y="117" width="28" height="63"/>
+    <rect x="369" y="140" width="28" height="40"/>
+    <rect x="401" y="143" width="28" height="37"/>
+    <rect x="433" y="130" width="28" height="50"/>
+    <rect x="465" y="92" width="28" height="88"/>
+  </g>
+  <text x="235" y="202" font-size="18" font-family="Arial">thin strips added together</text>
+</svg>`;
+}
+
+function visualHTML(kind){
+  if(kind==="integral") return svgIntegral();
+  if(kind==="money") return `<div>Borrow $100 → repay $103</div>`;
+  if(kind==="borrow") return `<div>Borrow money → pay extra later</div>`;
+  if(kind==="save") return `<div>Save $100 → receive $103</div>`;
+  if(kind==="bank") return `<div>central bank rate ↑ → loans cost more</div>`;
+  if(kind==="loan") return `<div>amount + rate + years → monthly payment</div>`;
+  if(kind==="ai") return `<div>examples → pattern → new answer</div>`;
+  if(kind==="portugal") return `<div>Western Iberia + Atlantic coast + Portuguese language</div>`;
+  if(kind==="wheel") return `<div>wheel rolls forward · no sideways slip</div>`;
+  if(kind==="tax") return `<div>estate → transfer → possible tax</div>`;
+  if(kind==="law") return `<div>promise → legal duty → consequence</div>`;
+  if(kind==="math") return `<div>quantity → relation → calculation</div>`;
+  if(kind==="tech") return `<div>material → device → function</div>`;
+  if(kind==="mechanics") return `<div>motion → force → response</div>`;
+  if(kind==="place") return `<div>location → people → identity</div>`;
+  if(kind==="culture") return `<div>forms → values → meaning</div>`;
+  if(kind==="book") return `<div>character → conflict → meaning</div>`;
+  if(kind==="series") return `<div>ordinary world → disruption → story</div>`;
+  return `<div>topic → simple scene → idea</div>`;
+}
+
+function searchUrl(extra){
+  const q = encodeURIComponent(current().title + " " + extra);
+  return "https://www.google.com/search?q=" + q;
+}
+
+function visualPlainText(kind){
+  if(kind==="integral") return "thin strips added together";
+  if(kind==="money") return "Borrow $100 → repay $103";
+  if(kind==="borrow") return "Borrow money → pay extra later";
+  if(kind==="save") return "Save $100 → receive $103";
+  if(kind==="bank") return "central bank rate ↑ → loans cost more";
+  if(kind==="loan") return "amount + rate + years → monthly payment";
+  if(kind==="ai") return "examples → pattern → new answer";
+  if(kind==="portugal") return "Western Iberia + Atlantic coast + Portuguese language";
+  if(kind==="wheel") return "wheel rolls forward · no sideways slip";
+  if(kind==="tax") return "estate → transfer → possible tax";
+  if(kind==="book") return "child's view → trial → town revealed";
+  if(kind==="series") return "small town → strange signal → hidden world";
+  return "topic → simple scene → idea";
+}
+
+function renderReading(){
+  document.getElementById("reading").innerHTML =
+    `<a target="_blank" href="${searchUrl("beginner explanation")}">Beginner article</a> &nbsp;|&nbsp; ` +
+    `<a target="_blank" href="${searchUrl("visual explanation")}">Visual explanation</a> &nbsp;|&nbsp; ` +
+    `<a target="_blank" href="${searchUrl("practical example")}">Practical example</a> &nbsp;|&nbsp; ` +
+    `<a target="_blank" href="${searchUrl("video")}">Video</a>`;
+}
+
+function render(){
+  const c = current();
+  touched[c.title] = touched[c.title] || {};
+  touched[c.title][level] = true;
+
+  [0,1,2,3].forEach(n=>{
+    const btn = document.getElementById("b" + n);
+    if(btn) btn.classList.toggle("active", level===n);
+  });
+  document.getElementById("topicInput").value = c.title;
+  document.getElementById("title").textContent = c.title;
+  document.getElementById("answerText").textContent = c.levels[level] || c.levels[1] || "";
+
+  const visual = document.getElementById("visual");
+  const diagram = integralDiagram(c.title);
+  if(diagram){
+    visual.innerHTML = diagram;
+    visual.classList.add("diagram");
+    visual.classList.add("show");
+  } else {
+    visual.innerHTML = "";
+    visual.classList.remove("diagram");
+    visual.classList.remove("show");
+  }
+
+  renderSpecialBox();
+  renderKnowledgeMap();
+  renderPathLine();
+  renderReading();
+
+  if(c.live){
+    if(c.aiError){
+      setAIStatus("AI: connection failed", true);
+    } else if(c.aiLoaded && c.aiLoaded[level]){
+      setAIStatus("AI: live answer loaded");
+    } else if(c.aiLoading && c.aiLoading[level]){
+      setAIStatus("AI: requesting live answer...");
+    } else {
+      setAIStatus("AI: ready for live answer");
+    }
+  } else {
+    setAIStatus("AI: preset answer loaded");
+  }
+}
+
+
+
+function integralDiagram(kind){
+  if(kind === "Integral"){
+    return `<svg viewBox="0 0 620 180" role="img" aria-label="Integral strips">
+      <line x1="60" y1="150" x2="560" y2="150" stroke="#777" stroke-width="2"/>
+      <line x1="60" y1="25" x2="60" y2="150" stroke="#777" stroke-width="2"/>
+      <g fill="#eeeeee" stroke="#999" stroke-width="1">
+        <rect x="120" y="100" width="28" height="50"/>
+        <rect x="153" y="78" width="28" height="72"/>
+        <rect x="186" y="60" width="28" height="90"/>
+        <rect x="219" y="50" width="28" height="100"/>
+        <rect x="252" y="58" width="28" height="92"/>
+        <rect x="285" y="76" width="28" height="74"/>
+        <rect x="318" y="100" width="28" height="50"/>
+        <rect x="351" y="118" width="28" height="32"/>
+        <rect x="384" y="114" width="28" height="36"/>
+        <rect x="417" y="88" width="28" height="62"/>
+      </g>
+      <path d="M100 130 C170 40, 245 30, 320 95 C390 155, 460 108, 500 45" fill="none" stroke="#444" stroke-width="4"/>
+      <text x="205" y="170" font-size="15" font-family="Arial" fill="#444">thin pieces added together</text>
+    </svg>`;
+  }
+
+  if(kind === "Area under a curve"){
+    return `<svg viewBox="0 0 620 180" role="img" aria-label="Area under curve">
+      <line x1="70" y1="150" x2="560" y2="150" stroke="#777" stroke-width="2"/>
+      <line x1="70" y1="25" x2="70" y2="150" stroke="#777" stroke-width="2"/>
+      <path d="M100 150 C170 40, 260 35, 350 100 C430 155, 505 95, 535 55 L535 150 Z" fill="#eeeeee" stroke="none"/>
+      <path d="M100 150 C170 40, 260 35, 350 100 C430 155, 505 95, 535 55" fill="none" stroke="#444" stroke-width="4"/>
+      <text x="245" y="130" font-size="17" font-family="Arial" fill="#444">area under curve</text>
+    </svg>`;
+  }
+
+  if(kind === "Integral of velocity"){
+    return `<svg viewBox="0 0 620 190" role="img" aria-label="Velocity time graph">
+      <line x1="70" y1="150" x2="560" y2="150" stroke="#777" stroke-width="2"/>
+      <line x1="70" y1="30" x2="70" y2="150" stroke="#777" stroke-width="2"/>
+      <text x="555" y="170" font-size="14" font-family="Arial" fill="#555">time</text>
+      <text x="25" y="35" font-size="14" font-family="Arial" fill="#555">velocity</text>
+      <path d="M100 150 C160 80, 250 55, 340 88 C420 118, 480 75, 525 62 L525 150 Z" fill="#eeeeee"/>
+      <path d="M100 150 C160 80, 250 55, 340 88 C420 118, 480 75, 525 62" fill="none" stroke="#444" stroke-width="4"/>
+      <text x="205" y="126" font-size="16" font-family="Arial" fill="#444">area = motion accumulated</text>
+    </svg>`;
+  }
+
+  if(kind === "Definite integral"){
+    return `<svg viewBox="0 0 620 185" role="img" aria-label="Definite integral interval">
+      <line x1="70" y1="150" x2="560" y2="150" stroke="#777" stroke-width="2"/>
+      <line x1="70" y1="30" x2="70" y2="150" stroke="#777" stroke-width="2"/>
+      <path d="M105 135 C175 45, 265 35, 350 96 C425 150, 500 100, 540 58" fill="none" stroke="#444" stroke-width="4"/>
+      <line x1="190" y1="150" x2="190" y2="48" stroke="#555" stroke-width="2" stroke-dasharray="5 5"/>
+      <line x1="445" y1="150" x2="445" y2="88" stroke="#555" stroke-width="2" stroke-dasharray="5 5"/>
+      <path d="M190 150 C245 42, 310 56, 350 96 C390 132, 425 117, 445 88 L445 150 Z" fill="#eeeeee"/>
+      <text x="183" y="170" font-size="16" font-family="Arial" fill="#444">a</text>
+      <text x="438" y="170" font-size="16" font-family="Arial" fill="#444">b</text>
+      <text x="255" y="130" font-size="16" font-family="Arial" fill="#444">count only this interval</text>
+    </svg>`;
+  }
+
+  return "";
+}
+
+function renderSpecialBox(){
+  const box = document.getElementById("specialBox");
+  if(!box) return;
+  const loanScreens = ["Calculate your loan", "Monthly payment", "Total interest"];
+  if(current().title === "Accurate calculator"){
+    box.innerHTML = `
+      <div class="loan-box">
+        <a class="loan-link" target="_blank" href="https://www.calculator.net/loan-calculator.html">Open more accurate loan calculator ↗</a>
+      </div>
+    `;
+    return;
+  }
+  if(!loanScreens.includes(current().title)){
+    box.innerHTML = "";
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="loan-box">
+      <div class="loan-grid">
+        <div>
+          <label>Loan amount</label>
+          <input id="loanAmount" type="number" value="100000" min="0" step="1000">
+        </div>
+        <div>
+          <label>Interest rate %</label>
+          <input id="loanRate" type="number" value="5" min="0" step="0.1">
+        </div>
+        <div>
+          <label>Years</label>
+          <input id="loanYears" type="number" value="25" min="1" step="1">
+        </div>
+      </div>
+      <button id="loanCalcBtn" class="primary" style="width:100%;">Calculate</button>
+      <div class="loan-result" id="loanResult"></div>
+      <a class="loan-link" target="_blank" href="https://www.calculator.net/loan-calculator.html">More accurate loan calculator ↗</a>
+    </div>
+  `;
+
+  document.getElementById("loanCalcBtn").onclick = calculateLoan;
+  calculateLoan();
+}
+
+function money(x){
+  return "$" + Math.round(x).toLocaleString();
+}
+
+function calculateLoan(){
+  const amount = Number(document.getElementById("loanAmount").value);
+  const annualRate = Number(document.getElementById("loanRate").value) / 100;
+  const years = Number(document.getElementById("loanYears").value);
+  const n = years * 12;
+  const r = annualRate / 12;
+
+  if(!amount || !years || amount <= 0 || years <= 0){
+    document.getElementById("loanResult").textContent = "Enter loan amount, rate, and years.";
+    return;
+  }
+
+  let monthly;
+  if(r === 0){
+    monthly = amount / n;
+  } else {
+    monthly = amount * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+  }
+
+  const totalPaid = monthly * n;
+  const totalInterest = totalPaid - amount;
+
+  document.getElementById("loanResult").innerHTML =
+    `<b>Monthly payment:</b> ${money(monthly)}<br>` +
+    `<b>Total paid:</b> ${money(totalPaid)}<br>` +
+    `<b>Total interest:</b> ${money(totalInterest)}`;
+}
+
+function nodeButton(nodeObj, nodePath, depth){
+  const wrap = document.createElement("div");
+  wrap.className = depth === 0 ? "map-root" : (depth === 1 ? "map-node" : "map-child");
+  wrap.dataset.depth = depth;
+
+  const topicButton = document.createElement("button");
+  const isCurrent = current().title === nodeObj.title;
+  const wasTouched = !!touched[nodeObj.title];
+  topicButton.className = "map-topic" + (isCurrent ? " current" : (wasTouched ? " touched" : ""));
+  topicButton.textContent = nodeObj.title;
+  topicButton.onclick = () => {
+    path = nodePath.slice();
+    if(nodePath.length >= 2){
+      collapsed[nodePath[0].title + "::" + nodePath[1].title] = false;
+    }
+    render();
+  };
+  wrap.appendChild(topicButton);
+
+  [0,1,2,3].forEach(n=>{
+    const b = document.createElement("button");
+    const currentLevel = isCurrent && n === level;
+    const touchedLevel = touched[nodeObj.title] && touched[nodeObj.title][n];
+    b.className = "map-level" + (currentLevel ? " current" : (touchedLevel ? " touched" : ""));
+    b.textContent = n;
+    b.onclick = () => {
+      path = nodePath.slice();
+      if(nodePath.length >= 2){
+        collapsed[nodePath[0].title + "::" + nodePath[1].title] = false;
+      }
+      setLevel(n);
+    };
+    wrap.appendChild(b);
+  });
+
+  return wrap;
+}
+
+function renderKnowledgeMap(){
+  const box = document.getElementById("knowledgeMap");
+  box.innerHTML = "";
+
+  const rootNode = path[0];
+  box.appendChild(nodeButton(rootNode, [rootNode], 0));
+
+  Object.keys(rootNode.children || {}).forEach(childName=>{
+    const child = rootNode.children[childName];
+    const branch = document.createElement("div");
+    branch.className = "map-branch";
+
+    const grandchildren = Object.keys(child.children || {});
+    const header = document.createElement("div");
+    header.className = "map-node";
+
+    if(grandchildren.length){
+      const key = rootNode.title + "::" + child.title;
+      if(collapsed[key] === undefined) collapsed[key] = true;
+      const toggle = document.createElement("button");
+      toggle.className = "map-toggle";
+      toggle.textContent = collapsed[key] ? "›" : "⌄";
+      toggle.onclick = () => {
+        collapsed[key] = !collapsed[key];
+        render();
+      };
+      header.appendChild(toggle);
+    }
+
+    const nodePart = nodeButton(child, [rootNode, child], 1);
+    while(nodePart.firstChild){
+      header.appendChild(nodePart.firstChild);
+    }
+    branch.appendChild(header);
+
+    if(grandchildren.length){
+      const key = rootNode.title + "::" + child.title;
+      const childBox = document.createElement("div");
+      childBox.className = "map-children" + (collapsed[key] ? " collapsed" : "");
+      grandchildren.forEach(gcName=>{
+        const gc = child.children[gcName];
+        childBox.appendChild(nodeButton(gc, [rootNode, child, gc], 2));
+      });
+      branch.appendChild(childBox);
+    }
+
+    box.appendChild(branch);
+  });
+}
+
+function renderPathLine(){
+  const line = document.getElementById("pathLine");
+  line.innerHTML = "";
+  path.forEach((node, index)=>{
+    if(index > 0){
+      const sep = document.createElement("span");
+      sep.textContent = "/";
+      line.appendChild(sep);
+    }
+    const b = document.createElement("button");
+    b.textContent = node.title;
+    b.onclick = () => {
+      path = path.slice(0, index + 1);
+      render();
+    };
+    line.appendChild(b);
+  });
+}
+
+function findNodeByTitle(title){
+  const key = normalize(title);
+  if(roots[key]) return { found:true, newPath:[roots[key]] };
+
+  function search(node, trail){
+    if(normalize(node.title) === key) return trail;
+    for(const childName of Object.keys(node.children || {})){
+      const child = node.children[childName];
+      const result = search(child, trail.concat(child));
+      if(result) return result;
+    }
+    return null;
+  }
+
+  for(const rootKey of Object.keys(roots)){
+    const r = roots[rootKey];
+    const result = search(r, [r]);
+    if(result) return { found:true, newPath:result };
+  }
+
+  return { found:false };
+}
+
+function loadTopic(name){
+  const requestedLevel = level;
+  const displayName = (name || "New topic").trim() || "New topic";
+  const result = findNodeByTitle(displayName);
+  if(result.found){
+    path = result.newPath;
+    level = requestedLevel;
+    render();
+    return;
+  }
+
+  path = [makeLiveNode(displayName)];
+  level = requestedLevel;
+  requestAIForCurrent();
+}
+
+document.getElementById("b0").onclick = () => setLevel(0);
+document.getElementById("b1").onclick = () => setLevel(1);
+document.getElementById("b2").onclick = () => setLevel(2);
+document.getElementById("b3").onclick = () => setLevel(3);
+document.getElementById("answerBtn").onclick = () => loadTopic(document.getElementById("topicInput").value);
+document.getElementById("newTopicBtn").onclick = () => {
+  document.getElementById("topicInput").value = "";
+  document.getElementById("knowledgeMap").innerHTML = "";
+  document.getElementById("pathLine").innerHTML = "";
+  document.getElementById("topicInput").focus();
+};
+document.getElementById("topicInput").addEventListener("keydown", e=>{ if(e.key==="Enter") document.getElementById("answerBtn").click(); });
+document.getElementById("presetToggle").onclick = () => document.getElementById("presetPanel").classList.toggle("show");
+document.getElementById("moreBtn").onclick = () => document.getElementById("moreText").classList.toggle("show");
+
+const presetData = {
+  "Finance": ["Interest rate", "Inflation", "Mortgage"],
+  "Law": ["Inheritance taxes in USA", "Contract", "Copyright"],
+  "Math": ["Integral", "Derivative", "Probability"],
+  "AI": ["Artificial intelligence", "Large language model", "AI hallucination"],
+  "Technology": ["Computer chip", "Semiconductor", "3D printing"],
+  "Mechanics": ["Non-holonomic mechanical systems", "Newton's laws", "Oscillation"],
+  "Places": ["Portugal", "Japan", "California"],
+  "Culture": ["Renaissance", "Modern art", "Architecture"],
+  "Literature": ["To Kill a Mockingbird", "War and Peace", "Hamlet"],
+  "Media": ["Stranger Things", "Star Wars", "The Matrix"]
+};
+
+let selectedPresetField = "Finance";
+
+function renderPresetFields(){
+  const box = document.getElementById("presetFields");
+  box.innerHTML = "";
+
+  Object.keys(presetData).forEach(field=>{
+    const b = document.createElement("button");
+    b.textContent = field;
+    b.className = field === selectedPresetField ? "selected" : "";
+    b.onclick = () => {
+      selectedPresetField = field;
+      renderPresetFields();
+      renderPresetTopics();
+    };
+    box.appendChild(b);
+  });
+}
+
+function renderPresetTopics(){
+  const box = document.getElementById("presetTopics");
+  box.innerHTML = "";
+
+  presetData[selectedPresetField].forEach(topicName=>{
+    const b = document.createElement("button");
+    b.textContent = topicName;
+    b.onclick = () => {
+      loadTopic(topicName);
+      document.getElementById("presetPanel").classList.remove("show");
+    };
+    box.appendChild(b);
+  });
+}
+
+renderPresetFields();
+renderPresetTopics();
+
+render();
+</script>
+</body>
+</html>
