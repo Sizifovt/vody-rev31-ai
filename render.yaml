@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: vody-rev33-ui-cleanup
+    name: yody-rev39-history-in-answer-box
     env: node
     buildCommand: npm install
     startCommand: npm start

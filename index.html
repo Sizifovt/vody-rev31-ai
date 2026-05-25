@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VODY correct layout rev33</title>
+<title>YODY correct layout rev50</title>
 <style>
 :root{
   --blue:#2f5bff;
@@ -58,7 +58,7 @@ input{
 }
 .controls{
   display:grid;
-  grid-template-columns:repeat(5, 1fr);
+  grid-template-columns:repeat(4, 1fr) repeat(3, 1.35fr);
   gap:7px;
   margin:9px 0 12px;
 }
@@ -690,7 +690,7 @@ button{
   font-size:18px;
   font-weight:500;
 }
-#answerBtn{
+#answerBtn,#viewpointsBtn{
   font-weight:500;
 }
 .ai-status{
@@ -918,7 +918,7 @@ button.active, button.primary{
   #newTopicBtn{font-size:15px !important;}
   .controls{gap:7px !important;}
   .controls button{min-height:45px !important; font-size:17px !important; border-radius:12px !important;}
-  #answerBtn{font-size:15px !important;}
+  #answerBtn,#viewpointsBtn{font-size:15px !important;}
   .answer-card{padding:15px !important;}
   .title{font-size:24px !important;}
   .text{font-size:19px !important;}
@@ -932,15 +932,157 @@ button.active, button.primary{
   .map-level{min-height:29px !important; min-width:29px !important; width:29px !important; font-size:14px !important;}
 }
 
+
+/* Rev38: language/bullets/history/formula/illustration/web-link cleanup */
+
+.recipe-list{display:flex;flex-direction:column;gap:12px;max-width:100%;overflow:hidden;}
+.recipe-card{background:#fbfcff;border:1px solid #e7ebf3;border-radius:18px;padding:14px 16px 13px;box-shadow:0 1px 0 rgba(15,23,42,.03);max-width:100%;overflow-wrap:anywhere;word-break:normal;}
+.recipe-card:last-child{border-bottom:1px solid #e7ebf3;}
+.recipe-title{font-weight:900;font-size:1.02em;margin:0 0 8px;color:#071326;line-height:1.22;}
+.recipe-line{margin:5px 0;line-height:1.34;max-width:100%;overflow-wrap:anywhere;}
+.recipe-label{font-style:italic;font-weight:500;color:#1f2937;}
+.recipe-line.technique-line{font-size:.94em;color:#5b6472;}
+.recipe-line.technique-line .recipe-label{color:#5b6472;}
+
+#answerText{
+  white-space:normal !important;
+  margin-bottom:14px !important;
+}
+.answer-list{
+  list-style:disc outside;
+  margin:0 0 14px 1.25em;
+  padding:0;
+}
+.answer-list li{
+  margin:0 0 8px;
+  padding-left:0.15em;
+  line-height:1.38;
+}
+.answer-list li:last-child{margin-bottom:0;}
+.formula-line{
+  overflow-x:auto;
+  max-width:100%;
+}
+.MathJax{
+  overflow-x:auto;
+  overflow-y:hidden;
+  max-width:100%;
+}
+.pathline{
+  display:flex !important;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:4px;
+  margin:0 0 10px !important;
+  padding:0 0 8px;
+  border-bottom:1px solid #eef0f5;
+  color:var(--muted) !important;
+  font-style:normal !important;
+}
+.pathline::before{
+  content:"History:";
+  font-size:14px;
+  color:var(--muted);
+  margin-right:2px;
+}
+.pathline button{
+  display:inline-flex !important;
+  align-items:center;
+  min-height:28px !important;
+  padding:2px 7px !important;
+  border:1px solid var(--line) !important;
+  border-radius:8px !important;
+  background:#fff !important;
+  color:var(--text) !important;
+  font-style:normal !important;
+  font-size:13px !important;
+}
+.visual.diagram{
+  margin:2px 0 14px !important;
+  background:#fbfbfd !important;
+}
+.visual.diagram svg text{
+  font-family:-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif;
+}
+@media(max-width:600px){
+  .answer-list{margin-left:1.15em;}
+  .answer-list li{margin-bottom:7px;}
+}
+
+/* Rev39: move clickable History line into answer box below Web links */
+.answer-card .pathline{
+  margin:10px 0 0 !important;
+  padding:8px 0 0 !important;
+  border-bottom:0 !important;
+  border-top:1px solid #eef0f5 !important;
+}
+.section-panel .pathline{display:none !important;}
+
+
+
+/* Rev40: prevent live formulas from exploding in answer bullets */
+.answer-card mjx-container{
+  max-width:100% !important;
+  overflow-x:auto !important;
+}
+.answer-card mjx-container[display="true"]{
+  font-size:105% !important;
+}
+.answer-list li mjx-container{
+  font-size:105% !important;
+}
+
+
+
+/* Rev50: Save & Share frozen view and saved topics */
+#saveShareBtn{font-weight:500;}
+.saved-note{display:none; font-size:13px; color:var(--muted); margin:0 0 8px; letter-spacing:.02em; text-transform:uppercase;}
+.frozen-actions{display:none; margin-top:14px; padding-top:12px; border-top:1px solid var(--line); grid-template-columns:1fr 1fr; gap:8px;}
+.frozen-actions button{font-size:16px; min-height:40px;}
+.frozen-actions .return-btn{grid-column:1 / -1; background:var(--text); color:#fff; border-color:var(--text); font-weight:700;}
+body.frozen-mode .input-row,
+body.frozen-mode .controls,
+body.frozen-mode #mapToggle,
+body.frozen-mode #mapPanel,
+body.frozen-mode #presetToggle,
+body.frozen-mode #presetPanel,
+body.frozen-mode #moreBtn,
+body.frozen-mode #moreText{display:none !important;}
+body.frozen-mode .answer-card{border:2px solid #9aa3b2; background:#fbfbfd;}
+body.frozen-mode .saved-note{display:block;}
+body.frozen-mode .frozen-actions{display:grid;}
+.saved-list button{text-align:left; min-height:42px; font-size:15px; cursor:pointer; border:1px solid var(--line); background:#fff;}
+.saved-list button:hover{border-color:var(--accent); box-shadow:0 1px 0 rgba(79,46,229,.12);}
+.saved-list button:active{transform:translateY(1px);}
+body.frozen-mode .pathline{display:none !important;}
+@media(max-width:600px){
+  .controls{grid-template-columns:repeat(4, 1fr);}
+  #answerBtn,#viewpointsBtn,#saveShareBtn{grid-column:auto / span 1; font-size:15px;}
+}
+
 </style>
+
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
 </head>
 <body>
 <main class="wrap">
-  <div class="logo">VODY <span class="revtag">rev33</span></div>
+  <div class="logo">YODY <span class="revtag">rev50</span></div>
   <div class="slogan">Natural Learning Platform · Same Subject. Different Resolution.</div>
 
   <div class="input-row">
-    <input id="topicInput" value="Interest rate" aria-label="Topic">
+    <input id="topicInput" value="Interest rate" aria-label="Topic" spellcheck="true" autocomplete="off" autocapitalize="sentences">
     <button id="newTopicBtn">New topic</button>
   </div>
 
@@ -950,20 +1092,38 @@ button.active, button.primary{
     <button id="b2">2</button>
     <button id="b3">3</button>
     <button id="answerBtn">Answer</button>
+    <button id="viewpointsBtn">Viewpoints</button>
+    <button id="saveShareBtn">Save & Share</button>
   </div>
   <section class="answer-card" id="answerCard">
+    <div class="saved-note" id="savedNote">Saved copy</div>
     <h1 class="title" id="title">Interest rate</h1>
     <div class="text" id="answerText"></div>
     <div class="visual memory" id="visual" style="display:none;"></div>
     <div id="specialBox"></div>
     <div class="reading" id="reading"></div>
+    <div class="pathline" id="pathLine"></div>
+    <div class="frozen-actions" id="frozenActions">
+      <button id="returnBtn" class="return-btn">RETURN</button>
+      <button id="copyAnswerBtn">Copy</button>
+      <button id="printAnswerBtn">Print</button>
+      <button id="pdfAnswerBtn">PDF</button>
+      <button id="linkAnswerBtn">Link</button>
+      <button id="openSavedBtn">Open Saved Topics</button>
+    </div>
   </section>
 
   <button class="section-toggle open" id="mapToggle">Knowledge map <span class="chev">⌃</span></button>
   <section class="section-panel show" id="mapPanel">
     <div class="map" id="knowledgeMap"></div>
-    <div class="pathline" id="pathLine"></div>
   </section>
+
+  <button class="section-toggle" id="savedToggle">Saved topics <span class="chev">⌄</span></button>
+  <div class="preset-panel" id="savedPanel">
+    <div class="preset-heading">Saved continuity states</div>
+    <div class="preset-grid saved-list" id="savedTopicsList"></div>
+    <button class="clear" id="clearSavedBtn">Clear saved topics</button>
+  </div>
 
   <button class="section-toggle" id="presetToggle">Preset topics <span class="chev">⌄</span></button>
   <div class="preset-panel" id="presetPanel">
@@ -976,7 +1136,7 @@ button.active, button.primary{
   </div>
 
   <button class="section-toggle" id="moreBtn">More <span class="chev">⌄</span></button>
-  <div class="more" id="moreText">Later: topic of the day, source mode, and pro/con mode. Rev33 keeps the interface clean while preserving live AI connection.</div>
+  <div class="more" id="moreText">Later: topic of the day and source mode. Rev50 adds Save & Share continuity with a frozen saved view.</div>
 </main>
 
 <script>
@@ -1007,7 +1167,19 @@ function makeLiveNode(title){
   n.aiLoaded = {};
   n.aiLoading = {};
   n.aiError = false;
+  n.viewpointLevels = {};
+  n.viewpointsLoaded = {};
+  n.viewpointsLoading = {};
+  n.viewpointsError = false;
   return n;
+}
+
+function ensureViewpointsState(nodeObj){
+  if(!nodeObj) return;
+  nodeObj.viewpointLevels = nodeObj.viewpointLevels || {};
+  nodeObj.viewpointsLoaded = nodeObj.viewpointsLoaded || {};
+  nodeObj.viewpointsLoading = nodeObj.viewpointsLoading || {};
+  nodeObj.viewpointsError = !!nodeObj.viewpointsError;
 }
 
 function buildChildrenFromSubtopics(subtopics){
@@ -1032,6 +1204,33 @@ function buildChildrenFromSubtopics(subtopics){
   return children;
 }
 
+function cleanLivePayload(data, fallbackTopic){
+  let answer = String((data && data.answer) || "").trim();
+  let subtopics = Array.isArray(data && data.subtopics) ? data.subtopics : [];
+
+  const raw = answer.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```\s*$/i, "").trim();
+  if(/^\{[\s\S]*"answer"[\s\S]*"subtopics"[\s\S]*\}\s*$/.test(raw)){
+    try{
+      const parsed = JSON.parse(raw);
+      if(typeof parsed.answer === "string") answer = parsed.answer;
+      if(Array.isArray(parsed.subtopics)) subtopics = parsed.subtopics;
+    } catch(e){
+      const answerMatch = raw.match(/"answer"\s*:\s*"([\s\S]*?)"\s*,\s*"subtopics"\s*:/i);
+      if(answerMatch) answer = answerMatch[1].replace(/\\n/g,"\n").replace(/\\"/g,'"');
+      const subtopicMatch = raw.match(/"subtopics"\s*:\s*\[([\s\S]*?)\]\s*\}/i);
+      if(subtopicMatch){
+        subtopics = Array.from(subtopicMatch[1].matchAll(/"([^"\\]*(?:\\.[^"\\]*)*)"/g)).map(m=>m[1].replace(/\\"/g,'"'));
+      }
+    }
+  }
+  answer = answer
+    .replace(/^\s*\{\s*"answer"\s*:\s*"?/i, "")
+    .replace(/"?\s*,\s*"subtopics"\s*:\s*\[[\s\S]*?\]\s*\}\s*$/i, "")
+    .replace(/\\n/g, "\n")
+    .trim();
+  return { answer, subtopics };
+}
+
 async function requestAIForCurrent(){
   const c = current();
   if(!c || !c.live || (c.aiLoaded && c.aiLoaded[level]) || (c.aiLoading && c.aiLoading[level])){
@@ -1052,6 +1251,7 @@ async function requestAIForCurrent(){
       body:JSON.stringify({
         topic:c.title,
         level,
+        mode:"answer",
         path:path.map(p=>p.title)
       })
     });
@@ -1061,16 +1261,17 @@ async function requestAIForCurrent(){
       throw new Error(data.error || "AI backend did not return an answer.");
     }
 
-    c.levels[level] = splitIntoIdeaLines(data.answer);
+    const livePayload = cleanLivePayload(data, c.title);
+    c.levels[level] = splitIntoIdeaLines(livePayload.answer);
     c.aiLoaded[level] = true;
     c.aiError = false;
-    if(data.subtopics && Object.keys(c.children || {}).length === 0){
-      c.children = buildChildrenFromSubtopics(data.subtopics);
+    if(livePayload.subtopics && Object.keys(c.children || {}).length === 0){
+      c.children = buildChildrenFromSubtopics(livePayload.subtopics);
     }
     setAIStatus("AI: live answer loaded");
   } catch(err){
     c.aiError = true;
-    c.levels[level] = "AI connection failed. Check that the Rev33 backend is running and that OPENAI_API_KEY is set on the server. No fake browser answer is being shown.";
+    c.levels[level] = "AI connection failed. Check that the Rev48 backend is running and that OPENAI_API_KEY is set on the server. No fake browser answer is being shown.";
     setAIStatus("AI: connection failed", true);
   } finally {
     c.aiLoading[level] = false;
@@ -1078,10 +1279,62 @@ async function requestAIForCurrent(){
   }
 }
 
+async function requestViewpointsForCurrent(){
+  const c = current();
+  if(!c){
+    render();
+    return;
+  }
+  ensureViewpointsState(c);
+  if((c.viewpointsLoaded && c.viewpointsLoaded[level]) || (c.viewpointsLoading && c.viewpointsLoading[level])){
+    render();
+    return;
+  }
+
+  c.viewpointsLoading[level] = true;
+  c.viewpointsError = false;
+  c.viewpointLevels[level] = "Asking AI for viewpoints...";
+  render();
+  setAIStatus("Asking AI for viewpoints...");
+
+  try{
+    const response = await fetch(AI_ENDPOINT, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        topic:c.title,
+        level,
+        mode:"viewpoints",
+        path:path.map(p=>p.title)
+      })
+    });
+
+    const data = await response.json().catch(()=>({}));
+    if(!response.ok || !data.answer){
+      throw new Error(data.error || "AI backend did not return viewpoints.");
+    }
+
+    const livePayload = cleanLivePayload(data, c.title);
+    c.viewpointLevels[level] = splitIntoIdeaLines(livePayload.answer);
+    c.viewpointsLoaded[level] = true;
+    c.viewpointsError = false;
+    setAIStatus("AI: viewpoints loaded");
+  } catch(err){
+    c.viewpointsError = true;
+    c.viewpointLevels[level] = "AI connection failed. Check that the Rev48 backend is running and that OPENAI_API_KEY is set on the server. No fake browser viewpoints answer is being shown.";
+    setAIStatus("AI: viewpoints failed", true);
+  } finally {
+    c.viewpointsLoading[level] = false;
+    render();
+  }
+}
+
 function setLevel(n){
   level = n;
   const c = current();
-  if(c && c.live && !(c.aiLoaded && c.aiLoaded[level])){
+  if(actionMode === "viewpoints"){
+    requestViewpointsForCurrent();
+  } else if(c && c.live && !(c.aiLoaded && c.aiLoaded[level])){
     requestAIForCurrent();
   } else {
     render();
@@ -1336,7 +1589,7 @@ const roots = {
   "newton's laws": node("Newton's laws","mechanics","A hockey puck keeps sliding unless something changes its motion.\nNewton's laws explain how force, mass, and motion fit together.","Newton's laws are three basic rules of classical mechanics: objects keep their motion unless acted on, force changes motion according to F = ma, and forces come in equal-opposite pairs.",{
         "First law": node("First law","mechanics","A book stays on the table, and a puck keeps sliding unless a force changes it.\nThe first law is the rule of inertia.","Newton's first law says an object remains at rest or in uniform straight-line motion unless acted on by a net external force.",{}),
         "Second law": node("Second law","mechanics","Push the same cart harder and it accelerates more; load it heavier and it accelerates less.\nThe second law connects force, mass, and acceleration.","Newton's second law says net force equals mass times acceleration: F = ma.",{}),
-        "Force": node("Force","mechanics","You push a box and it starts moving.\nForce is the push or pull that can change motion.","Force is an interaction that can change an object's motion or shape. In mechanics, net force equals mass times acceleration.",{})
+        "Third law": node("Third law","mechanics","When you push on a wall, the wall pushes back on you.\nThe third law is the rule of equal and opposite interaction forces.","Newton's third law says that when one body exerts a force on another body, the second body exerts an equal and opposite force on the first.",{})
       }),
 
   "oscillation": node("Oscillation","mechanics","A swing moves forward, slows, comes back, and repeats.\nOscillation is repeated motion around a middle position.","Oscillation is back-and-forth motion around equilibrium. It often involves inertia and a restoring effect.",{
@@ -1463,6 +1716,10 @@ const levelOverrides = {
     2: "Newton's second law states that net force produces acceleration. In the common constant-mass form, F = ma.\n\nThe direction of acceleration follows the net force, and larger mass reduces acceleration for the same net force.",
     3: "At expert level, the second law is more generally expressed through momentum balance. For constrained, variable-mass, rotating, or continuum systems, the simple F = ma form must be used with care.\n\nModeling depends on identifying all external forces and the correct coordinates."
   },
+  "Third law": {
+    2: "Newton's third law describes interaction pairs. If body A exerts a force on body B, body B exerts an equal and opposite force on body A.\n\nThe two forces act on different bodies, so they do not cancel each other on one body.",
+    3: "At expert level, the third law depends on identifying the two interacting bodies and separating force pairs from equilibrium force balance on a single body.\n\nIn field theories and relativistic settings, action-reaction bookkeeping can require momentum carried by fields."
+  },
   "Force": {
     2: "Force is an interaction that can change motion or deform a body. In Newtonian mechanics, the net force determines acceleration.\n\nForces may be contact forces, such as friction and normal force, or field forces, such as gravity and electromagnetism.",
     3: "At expert level, force is model-dependent. It may be represented as a vector field, constraint reaction, generalized force, stress distribution, or derivative of potential energy.\n\nIn advanced mechanics, the same dynamics may be formulated without force as the primary concept."
@@ -1567,7 +1824,10 @@ let touched = {};
 let collapsed = {};
 
 let level = 0;
+let actionMode = "answer";
 let path = [roots["interest rate"]];
+let frozenState = null;
+const SAVED_TOPICS_KEY = "YODY_saved_topics_rev49";
 
 function current(){ return path[path.length - 1]; }
 function normalize(s){ return s.trim().toLowerCase(); }
@@ -1616,8 +1876,58 @@ function visualHTML(kind){
   return `<div>topic → simple scene → idea</div>`;
 }
 
-function searchUrl(extra){
-  const q = encodeURIComponent(current().title + " " + extra);
+function hasCyrillicText(value){
+  return /[Ѐ-ӿ]/.test(String(value || ""));
+}
+
+function detectDisplayLanguage(){
+  const c = current && current();
+  const sample = [
+    c ? c.title : "",
+    c && c.levels ? (c.levels[level] || "") : "",
+    c && c.children ? Object.keys(c.children || {}).join(" ") : ""
+  ].join(" ").toLowerCase();
+
+  if(/[Ѐ-ӿ]/.test(sample)) return "ru";
+  if(/[áéíóúñ¿¡]/i.test(sample) || /\b(música|ejemplo|concepto|imágenes|artículos|para|porque)\b/i.test(sample)) return "es";
+  if(/[àâçéèêëîïôùûüœ]/i.test(sample) || /\b(musique|exemple|idée|articles|pourquoi)\b/i.test(sample)) return "fr";
+  if(/[äöüß]/i.test(sample) || /\b(musik|beispiel|bilder|artikel|warum)\b/i.test(sample)) return "de";
+  if(/[àèéìíîòóùú]/i.test(sample) || /\b(musica|esempio|immagini|articoli|perché)\b/i.test(sample)) return "it";
+  if(/[ãõáéíóúç]/i.test(sample) || /\b(música|exemplo|imagens|artigos|porque)\b/i.test(sample)) return "pt";
+  return "en";
+}
+
+function webLinkText(kind){
+  const lang = detectDisplayLanguage();
+  const labels = {
+    ru: { articles: "Веб-статьи", images: "Веб-изображения" },
+    es: { articles: "Artículos web", images: "Imágenes web" },
+    fr: { articles: "Articles web", images: "Images web" },
+    de: { articles: "Webartikel", images: "Webbilder" },
+    it: { articles: "Articoli web", images: "Immagini web" },
+    pt: { articles: "Artigos web", images: "Imagens web" },
+    en: { articles: "Web articles", images: "Web images" }
+  };
+  return (labels[lang] || labels.en)[kind] || labels.en[kind];
+}
+
+function webSearchExtra(kind){
+  const lang = detectDisplayLanguage();
+  const extras = {
+    ru: { articles: "статьи", images: "изображения" },
+    es: { articles: "artículos", images: "imágenes" },
+    fr: { articles: "articles", images: "images" },
+    de: { articles: "Artikel", images: "Bilder" },
+    it: { articles: "articoli", images: "immagini" },
+    pt: { articles: "artigos", images: "imagens" },
+    en: { articles: "web articles", images: "web images" }
+  };
+  return (extras[lang] || extras.en)[kind] || extras.en[kind];
+}
+
+function searchUrl(kind){
+  const q = encodeURIComponent(current().title + " " + webSearchExtra(kind));
+  if(kind === "images") return "https://www.google.com/search?tbm=isch&q=" + q;
   return "https://www.google.com/search?q=" + q;
 }
 
@@ -1641,9 +1951,9 @@ function renderReading(){
   const el = document.getElementById("reading");
   if(!el) return;
   el.innerHTML =
-    `<a target="_blank" href="${searchUrl("web articles")}">Web articles</a>` +
+    `<a target="_blank" href="${searchUrl("articles")}">${webLinkText("articles")}</a>` +
     `<span class="reading-sep">|</span>` +
-    `<a target="_blank" href="${searchUrl("web images")}">Web images</a>`;
+    `<a target="_blank" href="${searchUrl("images")}">${webLinkText("images")}</a>`;
 }
 
 function splitIntoIdeaLines(raw){
@@ -1655,12 +1965,40 @@ function splitIntoIdeaLines(raw){
     .replace(/\r/g, "\n")
     .replace(/\n{3,}/g, "\n\n");
 
+  const protectedTerms = {
+    "U.S.": "U§S§",
+    "U.K.": "U§K§",
+    "e.g.": "e§g§",
+    "i.e.": "i§e§",
+    "Dr.": "Dr§",
+    "Mr.": "Mr§",
+    "Mrs.": "Mrs§",
+    "Ms.": "Ms§",
+    "Prof.": "Prof§",
+    "vs.": "vs§"
+  };
+  const protect = value => {
+    let out = value;
+    Object.keys(protectedTerms).forEach(k => {
+      out = out.split(k).join(protectedTerms[k]);
+    });
+    return out;
+  };
+  const restore = value => {
+    let out = value;
+    Object.keys(protectedTerms).forEach(k => {
+      out = out.split(protectedTerms[k]).join(k);
+    });
+    return out;
+  };
+
   let lines = text.split(/\n+/).map(s => s.trim()).filter(Boolean);
 
   if(lines.length <= 1){
-    const matches = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g);
+    const protectedText = protect(text);
+    const matches = protectedText.match(/[^.!?]+[.!?]+|[^.!?]+$/g);
     if(matches && matches.length > 1){
-      lines = matches.map(s => s.trim()).filter(Boolean);
+      lines = matches.map(s => restore(s).trim()).filter(Boolean);
     }
   }
 
@@ -1670,11 +2008,287 @@ function splitIntoIdeaLines(raw){
   }).filter(Boolean).join("\n");
 }
 
+
+function escapeHTML(s){
+  return String(s || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function normalizeFormulaText(s){
+  let out = String(s || "");
+  out = out.replace(/\s*```(?:latex|tex|math)?\s*/gi, " ");
+  out = out.replace(/```\s*/g, " ");
+  out = out.replace(/\\begin\{equation\*?\}/g, "\\(");
+  out = out.replace(/\\end\{equation\*?\}/g, "\\)");
+  out = out.replace(/\\\[\s*([\s\S]*?)\s*\\\]/g, "\\($1\\)");
+  out = out.replace(/\\\(\s*F\s*=\s*m\s*\\times\s*a\s*\\\)/gi, "F = ma");
+  out = out.replace(/\\\(\s*F\s*=\s*ma\s*\\\)/gi, "F = ma");
+  // Do not convert dollar-sign text into LaTeX. Currency such as $100,000 must remain readable.
+  return out.trim();
+}
+
+function lineLooksFormula(s){
+  return /\\\(|\\\[|\\frac|\\sqrt|\\sum|\\int|=|×|\^|_/.test(String(s || ""));
+}
+
+function inlineMarkup(s){
+  let safe = escapeHTML(normalizeFormulaText(s));
+  safe = safe.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  return safe;
+}
+
+function isRecipePath(){
+  return Array.isArray(path) && path.some(node => /^recipes?$/i.test(String(node && node.title || "").trim()));
+}
+
+function renderRecipeLines(el, raw){
+  if(!el) return;
+  const text = String(raw || "").trim();
+  const lines = text.split(/\n+/).map(s => s.trim()).filter(Boolean);
+  const wrap = document.createElement("div");
+  wrap.className = "recipe-list";
+  let card = null;
+  let lastField = "";
+  function startCard(titleText){
+    card = document.createElement("div");
+    card.className = "recipe-card";
+    const title = document.createElement("div");
+    title.className = "recipe-title";
+    title.innerHTML = inlineMarkup(titleText);
+    card.appendChild(title);
+    wrap.appendChild(card);
+    lastField = "title";
+  }
+  lines.forEach(line=>{
+    let clean = line.replace(/^[-*•]\s*/, "").trim();
+    clean = clean.replace(/^Recipe\s*name\s*:\s*/i, "").trim();
+    clean = clean.replace(/^Recipe\s*\d+\s*:\s*/i, "").trim();
+    clean = clean.replace(/^#+\s*/, "").trim();
+    if(!clean) return;
+    const numberedTitle = clean.match(/^\d+[.)]\s+(.+)$/);
+    const fieldMatch = clean.match(/^(Ingredients|Method|Technique)\s*:\s*(.*)$/i);
+    const looksLikeTitle = !fieldMatch && (
+      !!numberedTitle ||
+      !card ||
+      lastField === "method" ||
+      lastField === "technique"
+    );
+    if(looksLikeTitle){
+      startCard((numberedTitle ? numberedTitle[1] : clean).trim());
+      return;
+    }
+    if(!card) startCard("Recipe");
+    const row = document.createElement("div");
+    row.className = "recipe-line";
+    if(fieldMatch){
+      const label = fieldMatch[1].charAt(0).toUpperCase() + fieldMatch[1].slice(1).toLowerCase();
+      const value = fieldMatch[2] || "";
+      if(label.toLowerCase() === "technique") row.classList.add("technique-line");
+      row.innerHTML = `<span class="recipe-label">${escapeHTML(label)}:</span> ${inlineMarkup(value)}`;
+      lastField = label.toLowerCase();
+    }else{
+      row.innerHTML = inlineMarkup(clean);
+      lastField = "text";
+    }
+    card.appendChild(row);
+  });
+  el.innerHTML = "";
+  el.appendChild(wrap);
+}
+
+function renderAnswerLines(el, raw, isLoading=false, recipeMode=false){
+  if(!el) return;
+  const text = String(raw || "").trim();
+  if(isLoading){
+    el.innerHTML = escapeHTML(text || "Asking AI...");
+    return;
+  }
+  if(recipeMode){
+    renderRecipeLines(el, text);
+    return;
+  }
+  const lines = splitIntoIdeaLines(text).split(/\n+/).map(s => s.trim()).filter(Boolean);
+  if(!lines.length){
+    el.innerHTML = "";
+    return;
+  }
+  const ul = document.createElement("ul");
+  ul.className = "answer-list";
+  lines.forEach(line=>{
+    const li = document.createElement("li");
+    if(lineLooksFormula(line)) li.classList.add("formula-line");
+    li.innerHTML = inlineMarkup(line);
+    ul.appendChild(li);
+  });
+  el.innerHTML = "";
+  el.appendChild(ul);
+}
+
+function typesetMath(root){
+  if(window.MathJax && window.MathJax.typesetPromise){
+    window.MathJax.typesetPromise(root ? [root] : undefined).catch(()=>{});
+  }
+}
+
+function cleanTopicInput(value){
+  let raw = String(value || "").replace(/\r/g, "\n").trim();
+  raw = raw.replace(/<[^>]*>/g, " ");
+  if(!raw) return "";
+
+  const lines = raw.split(/\n+/).map(s => s.trim()).filter(Boolean);
+  const bad = /^(selected level|path|rule|developer|system|return valid json|create the answer|language rule|format the answer|do not|you are yody|you are vody)\s*:?/i;
+  const candidates = lines
+    .map(s => s.replace(/^topic\s*:\s*/i, "").trim())
+    .filter(s => s && !bad.test(s));
+
+  let cleaned = (candidates[0] || raw.split(/\n+/)[0] || "").trim();
+  cleaned = cleaned.replace(/^topic\s*:\s*/i, "").trim();
+  cleaned = cleaned.replace(/\s+/g, " ");
+  return cleaned.slice(0, 180);
+}
+
+
+
+function getPathTitles(){
+  return path.map(n => n.title);
+}
+
+function currentRawAnswer(){
+  const c = current();
+  ensureViewpointsState(c);
+  return actionMode === "viewpoints" ? (c.viewpointLevels[level] || "") : (c.levels[level] || c.levels[1] || "");
+}
+
+function safeSavedTopics(){
+  try{
+    const raw = localStorage.getItem(SAVED_TOPICS_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch(e){ return []; }
+}
+
+function writeSavedTopics(items){
+  try{ localStorage.setItem(SAVED_TOPICS_KEY, JSON.stringify(items)); } catch(e){}
+}
+
+function makeCurrentState(){
+  const c = current();
+  return {
+    id: Date.now().toString(),
+    savedAt: new Date().toLocaleString(),
+    rootTitle: path[0] ? path[0].title : c.title,
+    currentTitle: c.title,
+    pathTitles: getPathTitles(),
+    level,
+    actionMode,
+    answerText: currentRawAnswer()
+  };
+}
+
+function saveCurrentState(){
+  const state = makeCurrentState();
+  const items = safeSavedTopics();
+  items.unshift(state);
+  writeSavedTopics(items.slice(0, 30));
+  renderSavedTopics();
+  return state;
+}
+
+function findChildByLooseTitle(parent, title){
+  if(!parent || !parent.children) return null;
+  const key = normalizeLooseTitle(title);
+  return Object.values(parent.children).find(ch => normalizeLooseTitle(ch.title) === key) || null;
+}
+
+function restorePathTitles(pathTitles){
+  if(!Array.isArray(pathTitles) || !pathTitles.length) return false;
+  const rootTitle = pathTitles[0];
+  const found = findNodeByTitle(rootTitle);
+  let newPath = found.found ? found.newPath.slice(0,1) : [makeLiveNode(rootTitle)];
+  for(let i=1;i<pathTitles.length;i++){
+    const child = findChildByLooseTitle(newPath[newPath.length-1], pathTitles[i]);
+    if(child) newPath.push(child);
+    else newPath.push(makeLiveNode(pathTitles[i]));
+  }
+  path = newPath;
+  return true;
+}
+
+function stateIsRecipePath(state){
+  return Array.isArray(state && state.pathTitles) && state.pathTitles.some(t => /^recipes?$/i.test(String(t || "").trim()));
+}
+
+function enterFrozenState(state){
+  frozenState = state;
+  document.body.classList.add("frozen-mode");
+  document.getElementById("title").textContent = displayTitle(state.currentTitle || state.rootTitle || "Saved answer");
+  renderAnswerLines(document.getElementById("answerText"), state.answerText || "Saved answer", false, stateIsRecipePath(state));
+  const note = document.getElementById("savedNote");
+  if(note) note.textContent = "Saved copy · " + (state.pathTitles || []).join(" / ") + " · Level " + state.level;
+  const reading = document.getElementById("reading");
+  if(reading) reading.style.display = "none";
+  const visual = document.getElementById("visual");
+  if(visual){ visual.innerHTML = ""; visual.classList.remove("show","diagram"); }
+  const specialBox = document.getElementById("specialBox");
+  if(specialBox) specialBox.innerHTML = "";
+  const pathLine = document.getElementById("pathLine");
+  if(pathLine) pathLine.innerHTML = "";
+}
+
+function returnFromFrozen(){
+  const state = frozenState;
+  document.body.classList.remove("frozen-mode");
+  frozenState = null;
+  if(state){
+    restorePathTitles(state.pathTitles);
+    level = Number.isInteger(state.level) ? state.level : 0;
+    actionMode = state.actionMode === "viewpoints" ? "viewpoints" : "answer";
+  }
+  render();
+}
+
+function plainCurrentFrozenText(){
+  const state = frozenState || makeCurrentState();
+  const pathText = (state.pathTitles || []).join(" / ");
+  return `${pathText}\nLevel ${state.level} · ${state.actionMode === "viewpoints" ? "Viewpoints" : "Answer"}\n\n${state.answerText || ""}`;
+}
+
+function copyFrozenAnswer(){
+  const text = plainCurrentFrozenText();
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).catch(()=>{});
+  }
+}
+
+function renderSavedTopics(){
+  const box = document.getElementById("savedTopicsList");
+  if(!box) return;
+  box.innerHTML = "";
+  const items = safeSavedTopics();
+  if(!items.length){
+    const div = document.createElement("div");
+    div.className = "preset-heading";
+    div.textContent = "No saved topics yet.";
+    box.appendChild(div);
+    return;
+  }
+  items.forEach(item=>{
+    const b = document.createElement("button");
+    const pathText = (item.pathTitles || [item.currentTitle || item.rootTitle || "Saved"]).join(" / ");
+    b.textContent = `${pathText} · L${item.level} · ${item.actionMode === "viewpoints" ? "Viewpoints" : "Answer"}`;
+    b.onclick = () => enterFrozenState(item);
+    box.appendChild(b);
+  });
+}
+
 function displayTitle(title){
   return String(title || "").replace(/\s*\([^)]*\)\s*$/, "").trim();
 }
 
 function render(){
+  if(document.body.classList.contains("frozen-mode")) return;
   const c = current();
   touched[c.title] = touched[c.title] || {};
   touched[c.title][level] = true;
@@ -1683,17 +2297,25 @@ function render(){
     const btn = document.getElementById("b" + n);
     if(btn) btn.classList.toggle("active", level===n);
   });
-  document.getElementById("topicInput").value = c.title;
-  const rawText = c.levels[level] || c.levels[1] || "";
+  const answerBtn = document.getElementById("answerBtn");
+  const viewpointsBtn = document.getElementById("viewpointsBtn");
+  if(answerBtn) answerBtn.classList.toggle("active", actionMode === "answer");
+  if(viewpointsBtn) viewpointsBtn.classList.toggle("active", actionMode === "viewpoints");
+
+  document.getElementById("topicInput").value = cleanTopicInput(c.title) || c.title;
+  ensureViewpointsState(c);
+  const rawText = actionMode === "viewpoints"
+    ? (c.viewpointLevels[level] || "")
+    : (c.levels[level] || c.levels[1] || "");
   const isLoading = /^Asking AI/.test(String(rawText).trim());
   document.getElementById("answerCard").classList.toggle("loading", isLoading);
   document.getElementById("title").style.display = isLoading ? "none" : "block";
   document.getElementById("reading").style.display = isLoading ? "none" : "flex";
   document.getElementById("title").textContent = displayTitle(c.title);
-  document.getElementById("answerText").textContent = isLoading ? "Asking AI..." : splitIntoIdeaLines(rawText);
+  renderAnswerLines(document.getElementById("answerText"), isLoading ? "Asking AI..." : rawText, isLoading, actionMode === "answer" && isRecipePath());
 
   const visual = document.getElementById("visual");
-  const diagram = integralDiagram(c.title);
+  const diagram = selectiveIllustration(c, level);
   if(diagram){
     visual.innerHTML = diagram;
     visual.classList.add("diagram");
@@ -1708,8 +2330,20 @@ function render(){
   renderKnowledgeMap();
   renderPathLine();
   renderReading();
+  typesetMath(document.getElementById("answerCard"));
 
-  if(c.live){
+  if(actionMode === "viewpoints"){
+    ensureViewpointsState(c);
+    if(c.viewpointsError){
+      setAIStatus("AI: viewpoints failed", true);
+    } else if(c.viewpointsLoaded && c.viewpointsLoaded[level]){
+      setAIStatus("AI: viewpoints loaded");
+    } else if(c.viewpointsLoading && c.viewpointsLoading[level]){
+      setAIStatus("AI: requesting viewpoints...");
+    } else {
+      setAIStatus("AI: ready for viewpoints");
+    }
+  } else if(c.live){
     if(c.aiError){
       setAIStatus("AI: connection failed", true);
     } else if(c.aiLoaded && c.aiLoaded[level]){
@@ -1724,6 +2358,157 @@ function render(){
   }
 }
 
+
+
+
+function svgPlaceMap(title){
+  const t = normalize(title);
+  if(t.includes("portugal")){
+    return `<svg viewBox="0 0 620 210" role="img" aria-label="Simple Portugal map">
+      <rect x="72" y="36" width="476" height="138" rx="18" fill="#f5f5f5" stroke="#d0d4dc" stroke-width="2"/>
+      <path d="M285 42 C250 55, 236 87, 242 125 C246 153, 265 172, 292 172 L307 151 L297 124 L311 92 L298 64 Z" fill="#ffffff" stroke="#555" stroke-width="3"/>
+      <path d="M242 55 C197 83, 177 126, 183 172" fill="none" stroke="#777" stroke-width="4"/>
+      <text x="116" y="100" font-size="18" fill="#444">Atlantic</text>
+      <text x="322" y="108" font-size="18" fill="#444">Spain</text>
+      <circle cx="285" cy="118" r="7" fill="#444"/>
+      <text x="300" y="123" font-size="17" fill="#444">Portugal</text>
+    </svg>`;
+  }
+  if(t.includes("japan")){
+    return `<svg viewBox="0 0 620 210" role="img" aria-label="Simple Japan map">
+      <rect x="78" y="36" width="464" height="138" rx="18" fill="#f5f5f5" stroke="#d0d4dc" stroke-width="2"/>
+      <text x="120" y="105" font-size="18" fill="#444">Pacific Ocean</text>
+      <ellipse cx="345" cy="68" rx="20" ry="38" transform="rotate(28 345 68)" fill="#fff" stroke="#555" stroke-width="3"/>
+      <ellipse cx="382" cy="109" rx="23" ry="50" transform="rotate(35 382 109)" fill="#fff" stroke="#555" stroke-width="3"/>
+      <ellipse cx="327" cy="138" rx="17" ry="32" transform="rotate(45 327 138)" fill="#fff" stroke="#555" stroke-width="3"/>
+      <text x="413" y="112" font-size="18" fill="#444">Japan</text>
+    </svg>`;
+  }
+  if(t.includes("california")){
+    return `<svg viewBox="0 0 620 210" role="img" aria-label="Simple California map">
+      <rect x="76" y="36" width="468" height="138" rx="18" fill="#f5f5f5" stroke="#d0d4dc" stroke-width="2"/>
+      <path d="M330 45 L390 62 L370 112 L398 166 L342 170 L315 118 L286 98 Z" fill="#fff" stroke="#555" stroke-width="3"/>
+      <path d="M290 48 C245 86, 224 130, 220 170" fill="none" stroke="#777" stroke-width="4"/>
+      <text x="120" y="105" font-size="18" fill="#444">Pacific</text>
+      <text x="407" y="116" font-size="18" fill="#444">California</text>
+    </svg>`;
+  }
+  return `<svg viewBox="0 0 620 210" role="img" aria-label="Simple place map">
+    <rect x="85" y="38" width="450" height="134" rx="18" fill="#f5f5f5" stroke="#d0d4dc" stroke-width="2"/>
+    <path d="M135 150 C205 108, 240 126, 300 84 C355 47, 405 72, 485 48" fill="none" stroke="#777" stroke-width="4"/>
+    <circle cx="310" cy="103" r="12" fill="#fff" stroke="#444" stroke-width="4"/>
+    <text x="270" y="188" font-size="18" fill="#444">location gives the first mental picture</text>
+  </svg>`;
+}
+
+function svgForceDiagram(){
+  return `<svg viewBox="0 0 620 210" role="img" aria-label="Force and motion diagram">
+    <rect x="250" y="96" width="110" height="56" rx="10" fill="#fff" stroke="#555" stroke-width="4"/>
+    <line x1="72" y1="152" x2="548" y2="152" stroke="#777" stroke-width="3"/>
+    <line x1="360" y1="124" x2="488" y2="124" stroke="#444" stroke-width="5" marker-end="url(#arrow)"/>
+    <text x="397" y="104" font-size="18" fill="#444">force</text>
+    <line x1="310" y1="96" x2="310" y2="52" stroke="#777" stroke-width="4" marker-end="url(#arrow)"/>
+    <text x="322" y="64" font-size="16" fill="#444">normal</text>
+    <line x1="310" y1="152" x2="310" y2="188" stroke="#777" stroke-width="4" marker-end="url(#arrow)"/>
+    <text x="322" y="184" font-size="16" fill="#444">weight</text>
+    <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#444"/></marker></defs>
+  </svg>`;
+}
+
+function svgWheelConstraint(){
+  return `<svg viewBox="0 0 620 210" role="img" aria-label="Rolling wheel constraint">
+    <line x1="70" y1="160" x2="550" y2="160" stroke="#777" stroke-width="3"/>
+    <circle cx="270" cy="105" r="55" fill="#fff" stroke="#555" stroke-width="4"/>
+    <circle cx="270" cy="105" r="7" fill="#555"/>
+    <path d="M270 50 A55 55 0 0 1 325 105" fill="none" stroke="#999" stroke-width="4"/>
+    <line x1="330" y1="105" x2="475" y2="105" stroke="#444" stroke-width="5" marker-end="url(#arrow2)"/>
+    <text x="360" y="86" font-size="18" fill="#444">rolls forward</text>
+    <text x="188" y="190" font-size="17" fill="#444">constraint: no sideways slip</text>
+    <defs><marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#444"/></marker></defs>
+  </svg>`;
+}
+
+function svgOscillation(){
+  return `<svg viewBox="0 0 620 210" role="img" aria-label="Oscillation diagram">
+    <line x1="80" y1="105" x2="160" y2="105" stroke="#777" stroke-width="5"/>
+    <path d="M160 105 l18 -28 l18 56 l18 -56 l18 56 l18 -56 l18 56 l18 -56 l18 56 l18 -28" fill="none" stroke="#555" stroke-width="4"/>
+    <rect x="332" y="72" width="88" height="66" rx="10" fill="#fff" stroke="#555" stroke-width="4"/>
+    <line x1="420" y1="105" x2="505" y2="105" stroke="#444" stroke-width="5" marker-end="url(#arrow3)"/>
+    <line x1="332" y1="105" x2="247" y2="105" stroke="#444" stroke-width="5" marker-end="url(#arrow3)"/>
+    <text x="247" y="170" font-size="18" fill="#444">back and forth around balance</text>
+    <defs><marker id="arrow3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#444"/></marker></defs>
+  </svg>`;
+}
+
+function svgDerivative(){
+  return `<svg viewBox="0 0 620 210" role="img" aria-label="Derivative tangent diagram">
+    <line x1="75" y1="165" x2="555" y2="165" stroke="#777" stroke-width="2"/>
+    <line x1="75" y1="35" x2="75" y2="165" stroke="#777" stroke-width="2"/>
+    <path d="M105 150 C180 130, 230 86, 300 90 C375 96, 435 58, 520 48" fill="none" stroke="#555" stroke-width="5"/>
+    <line x1="215" y1="118" x2="390" y2="70" stroke="#444" stroke-width="4"/>
+    <circle cx="300" cy="90" r="7" fill="#444"/>
+    <text x="325" y="126" font-size="18" fill="#444">slope at one point</text>
+  </svg>`;
+}
+
+function svgProbability(){
+  return `<svg viewBox="0 0 620 210" role="img" aria-label="Probability overlap diagram">
+    <rect x="105" y="45" width="410" height="125" rx="18" fill="#f5f5f5" stroke="#d0d4dc" stroke-width="2"/>
+    <circle cx="270" cy="108" r="58" fill="#fff" stroke="#555" stroke-width="4"/>
+    <circle cx="350" cy="108" r="58" fill="#fff" stroke="#555" stroke-width="4" opacity="0.85"/>
+    <text x="245" y="112" font-size="20" fill="#444">A</text>
+    <text x="370" y="112" font-size="20" fill="#444">B</text>
+    <text x="280" y="188" font-size="18" fill="#444">overlap = both happen</text>
+  </svg>`;
+}
+
+function svgTech(){
+  return `<svg viewBox="0 0 620 210" role="img" aria-label="Chip diagram">
+    <rect x="210" y="62" width="200" height="100" rx="14" fill="#fff" stroke="#555" stroke-width="4"/>
+    <g stroke="#777" stroke-width="3">
+      <line x1="185" y1="80" x2="210" y2="80"/><line x1="185" y1="105" x2="210" y2="105"/><line x1="185" y1="130" x2="210" y2="130"/>
+      <line x1="410" y1="80" x2="435" y2="80"/><line x1="410" y1="105" x2="435" y2="105"/><line x1="410" y1="130" x2="435" y2="130"/>
+      <line x1="250" y1="62" x2="250" y2="38"/><line x1="310" y1="62" x2="310" y2="38"/><line x1="370" y1="62" x2="370" y2="38"/>
+      <line x1="250" y1="162" x2="250" y2="186"/><line x1="310" y1="162" x2="310" y2="186"/><line x1="370" y1="162" x2="370" y2="186"/>
+    </g>
+    <text x="248" y="117" font-size="18" fill="#444">switches + circuits</text>
+  </svg>`;
+}
+
+function svgAI(){
+  return `<svg viewBox="0 0 620 210" role="img" aria-label="AI pattern diagram">
+    <rect x="80" y="72" width="110" height="70" rx="14" fill="#fff" stroke="#555" stroke-width="3"/>
+    <rect x="255" y="72" width="110" height="70" rx="14" fill="#fff" stroke="#555" stroke-width="3"/>
+    <rect x="430" y="72" width="110" height="70" rx="14" fill="#fff" stroke="#555" stroke-width="3"/>
+    <line x1="190" y1="107" x2="255" y2="107" stroke="#444" stroke-width="4" marker-end="url(#arrow4)"/>
+    <line x1="365" y1="107" x2="430" y2="107" stroke="#444" stroke-width="4" marker-end="url(#arrow4)"/>
+    <text x="113" y="113" font-size="18" fill="#444">examples</text>
+    <text x="286" y="113" font-size="18" fill="#444">pattern</text>
+    <text x="462" y="113" font-size="18" fill="#444">answer</text>
+    <defs><marker id="arrow4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#444"/></marker></defs>
+  </svg>`;
+}
+
+function selectiveIllustration(nodeObj, currentLevel){
+  if(!nodeObj || currentLevel !== 0) return "";
+  const title = normalize(nodeObj.title || "");
+  const kind = nodeObj.visual || "";
+
+  if(kind === "integral" || title.includes("integral") || title.includes("area under") || title.includes("definite integral")) return integralDiagram(nodeObj.title);
+  if(title.includes("derivative")) return svgDerivative();
+  if(title.includes("probability")) return svgProbability();
+
+  if(kind === "portugal" || kind === "place" || title.includes("portugal") || title.includes("japan") || title.includes("california")) return svgPlaceMap(nodeObj.title);
+
+  if(kind === "wheel" || title.includes("non-holonomic") || title.includes("rolling")) return svgWheelConstraint();
+  if(kind === "mechanics" || title.includes("newton") || title.includes("force") || title.includes("friction")) return svgForceDiagram();
+  if(title.includes("oscillation") || title.includes("spring") || title.includes("vibration")) return svgOscillation();
+
+  if(kind === "tech" || title.includes("chip") || title.includes("semiconductor") || title.includes("transistor")) return svgTech();
+  if(kind === "ai" || title.includes("artificial intelligence") || title.includes("large language model") || title.includes("hallucination")) return svgAI();
+
+  return "";
+}
 
 
 function integralDiagram(kind){
@@ -1873,7 +2658,11 @@ function mapRow(nodeObj, nodePath, depth){
   name.textContent = displayTitle(nodeObj.title);
   name.onclick = () => {
     path = nodePath.slice();
-    render();
+    if(actionMode === "viewpoints"){
+      requestViewpointsForCurrent();
+    } else {
+      render();
+    }
   };
   row.appendChild(name);
 
@@ -1926,18 +2715,43 @@ function renderPathLine(){
     b.textContent = node.title;
     b.onclick = () => {
       path = path.slice(0, index + 1);
-      render();
+      if(actionMode === "viewpoints"){
+        requestViewpointsForCurrent();
+      } else {
+        render();
+      }
     };
     line.appendChild(b);
   });
+}
+
+function normalizeLooseTitle(s){
+  return normalize(s)
+    .replace(/[’']/g, "")
+    .replace(/[^a-z0-9Ѐ-ӿ]+/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function findNodeByTitle(title){
   const key = normalize(title);
   if(roots[key]) return { found:true, newPath:[roots[key]] };
 
+  const aliases = {
+    "newtons laws": "newton's laws",
+    "newton laws": "newton's laws",
+    "newton law": "newton's laws"
+  };
+  const looseKey = normalizeLooseTitle(title);
+  if(aliases[looseKey] && roots[aliases[looseKey]]) return { found:true, newPath:[roots[aliases[looseKey]]] };
+  for(const rootKey of Object.keys(roots)){
+    if(normalizeLooseTitle(rootKey) === looseKey || normalizeLooseTitle(roots[rootKey].title) === looseKey){
+      return { found:true, newPath:[roots[rootKey]] };
+    }
+  }
+
   function search(node, trail){
-    if(normalize(node.title) === key) return trail;
+    if(normalize(node.title) === key || normalizeLooseTitle(node.title) === looseKey) return trail;
     for(const childName of Object.keys(node.children || {})){
       const child = node.children[childName];
       const result = search(child, trail.concat(child));
@@ -1955,33 +2769,126 @@ function findNodeByTitle(title){
   return { found:false };
 }
 
-function loadTopic(name){
+function loadTopic(name, mode="answer"){
   const requestedLevel = level;
-  const displayName = (name || "New topic").trim() || "New topic";
+  actionMode = mode === "viewpoints" ? "viewpoints" : "answer";
+  const displayName = cleanTopicInput(name) || "New topic";
+  const input = document.getElementById("topicInput");
+  if(input) input.value = displayName;
+
+  const c = current();
+  if(c && normalizeLooseTitle(c.title) === normalizeLooseTitle(displayName)){
+    level = requestedLevel;
+    if(actionMode === "viewpoints"){
+      requestViewpointsForCurrent();
+    } else if(c.live && !(c.aiLoaded && c.aiLoaded[level])){
+      requestAIForCurrent();
+    } else {
+      render();
+    }
+    return;
+  }
+
   const result = findNodeByTitle(displayName);
   if(result.found){
     path = result.newPath;
     level = requestedLevel;
-    render();
+    if(actionMode === "viewpoints"){
+      requestViewpointsForCurrent();
+    } else {
+      render();
+    }
     return;
   }
 
   path = [makeLiveNode(displayName)];
   level = requestedLevel;
-  requestAIForCurrent();
+  if(actionMode === "viewpoints"){
+    requestViewpointsForCurrent();
+  } else {
+    requestAIForCurrent();
+  }
+}
+
+
+function openPrintOnlyWindow(titleText){
+  const state = frozenState || makeCurrentState();
+  const w = window.open("", "_blank", "noopener,noreferrer,width=850,height=1000");
+  if(!w){ return; }
+  const answerHTML = document.getElementById("answerText") ? document.getElementById("answerText").innerHTML : escapeHTML(state.answerText || "");
+  const header = escapeHTML(titleText || state.currentTitle || state.rootTitle || "Saved answer");
+  const meta = escapeHTML(((state.pathTitles || []).join(" / ") || "Saved") + " · Level " + state.level);
+  w.document.open();
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${header}</title><style>body{font-family:Arial,sans-serif;margin:36px;color:#111827;line-height:1.35}.meta{font-size:12px;color:#64748b;text-transform:uppercase;margin-bottom:10px}.recipe-card{border:1px solid #e5e7eb;border-radius:14px;padding:14px 16px;margin:0 0 14px}.recipe-title{font-weight:800;font-size:18px;margin-bottom:8px}.recipe-line{margin:5px 0}.recipe-label{font-style:italic;font-weight:500}.technique-line{font-size:.94em;color:#5b6472}ul{padding-left:24px}@media print{button{display:none}}</style></head><body><div class="meta">${meta}</div><h1>${header}</h1>${answerHTML}<script>window.onload=()=>setTimeout(()=>window.print(),150)<\/script></body></html>`);
+  w.document.close();
+}
+
+function copyShareLink(){
+  const state = frozenState || makeCurrentState();
+  const payload = {pathTitles: state.pathTitles, level: state.level, actionMode: state.actionMode};
+  const text = location.origin + location.pathname + "#saved=" + encodeURIComponent(JSON.stringify(payload));
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).catch(()=>{}); }
 }
 
 document.getElementById("b0").onclick = () => setLevel(0);
 document.getElementById("b1").onclick = () => setLevel(1);
 document.getElementById("b2").onclick = () => setLevel(2);
 document.getElementById("b3").onclick = () => setLevel(3);
-document.getElementById("answerBtn").onclick = () => loadTopic(document.getElementById("topicInput").value);
-document.getElementById("newTopicBtn").onclick = () => {
-  document.getElementById("topicInput").value = "";
-  document.getElementById("knowledgeMap").innerHTML = "";
-  document.getElementById("pathLine").innerHTML = "";
-  document.getElementById("topicInput").focus();
+document.getElementById("answerBtn").onclick = () => loadTopic(document.getElementById("topicInput").value, "answer");
+document.getElementById("viewpointsBtn").onclick = () => loadTopic(document.getElementById("topicInput").value, "viewpoints");
+document.getElementById("saveShareBtn").onclick = () => enterFrozenState(saveCurrentState());
+document.getElementById("returnBtn").onclick = returnFromFrozen;
+document.getElementById("copyAnswerBtn").onclick = copyFrozenAnswer;
+document.getElementById("printAnswerBtn").onclick = () => openPrintOnlyWindow("Print answer");
+document.getElementById("pdfAnswerBtn").onclick = () => openPrintOnlyWindow("Export PDF");
+document.getElementById("linkAnswerBtn").onclick = copyShareLink;
+document.getElementById("openSavedBtn").onclick = () => {
+  document.body.classList.remove("frozen-mode");
+  frozenState = null;
+  const panel = document.getElementById("savedPanel");
+  const btn = document.getElementById("savedToggle");
+  render();
+  renderSavedTopics();
+  if(panel && !panel.classList.contains("show")) panel.classList.add("show");
+  if(btn){ btn.classList.add("open"); const ch = btn.querySelector(".chev"); if(ch) ch.textContent = "⌃"; }
 };
+document.getElementById("clearSavedBtn").onclick = () => { writeSavedTopics([]); renderSavedTopics(); };
+function clearForNewTopic(){
+  document.body.classList.remove("frozen-mode");
+  frozenState = null;
+  const topicInput = document.getElementById("topicInput");
+  const answerCard = document.getElementById("answerCard");
+  const title = document.getElementById("title");
+  const answerText = document.getElementById("answerText");
+  const visual = document.getElementById("visual");
+  const specialBox = document.getElementById("specialBox");
+  const reading = document.getElementById("reading");
+  const knowledgeMap = document.getElementById("knowledgeMap");
+  const pathLine = document.getElementById("pathLine");
+
+  if(topicInput) topicInput.value = "";
+  if(answerCard) answerCard.classList.remove("loading");
+  if(title){ title.textContent = ""; title.style.display = "none"; }
+  if(answerText) answerText.innerHTML = "";
+  if(visual){
+    visual.innerHTML = "";
+    visual.classList.remove("diagram");
+    visual.classList.remove("show");
+  }
+  if(specialBox) specialBox.innerHTML = "";
+  if(reading){ reading.innerHTML = ""; reading.style.display = "none"; }
+  if(knowledgeMap) knowledgeMap.innerHTML = "";
+  if(pathLine) pathLine.innerHTML = "";
+  actionMode = "answer";
+  const answerBtn = document.getElementById("answerBtn");
+  const viewpointsBtn = document.getElementById("viewpointsBtn");
+  if(answerBtn) answerBtn.classList.add("active");
+  if(viewpointsBtn) viewpointsBtn.classList.remove("active");
+  setAIStatus("AI: ready for live answer");
+  if(topicInput) topicInput.focus();
+}
+
+document.getElementById("newTopicBtn").onclick = clearForNewTopic;
 document.getElementById("topicInput").addEventListener("keydown", e=>{ if(e.key==="Enter") document.getElementById("answerBtn").click(); });
 function togglePanel(buttonId, panelId){
   const btn = document.getElementById(buttonId);
@@ -1995,6 +2902,7 @@ function togglePanel(buttonId, panelId){
   };
 }
 togglePanel("mapToggle", "mapPanel");
+togglePanel("savedToggle", "savedPanel");
 togglePanel("presetToggle", "presetPanel");
 togglePanel("moreBtn", "moreText");
 
@@ -2040,6 +2948,8 @@ function renderPresetTopics(){
     b.onclick = () => {
       loadTopic(topicName);
       document.getElementById("presetPanel").classList.remove("show");
+      const pt = document.getElementById("presetToggle");
+      if(pt){ pt.classList.remove("open"); const ch = pt.querySelector(".chev"); if(ch) ch.textContent = "⌄"; }
     };
     box.appendChild(b);
   });
@@ -2047,6 +2957,7 @@ function renderPresetTopics(){
 
 renderPresetFields();
 renderPresetTopics();
+renderSavedTopics();
 
 render();
 </script>
